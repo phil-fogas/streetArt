@@ -1,9 +1,6 @@
 # street Art
 sites sur le street Art projet de fin de formation,
 
-qui sera déjà hébergée sur la-passsion.fr/streetArt/,
-pour volée de ces propres aile.
-
 Site pour référencer les streets Art,
 cet art urbain issu du mouvement artistique contemporain développé à la fin du siècle dernier,
 cet art qui se retrouve dans nos rues, sur nos murs.
@@ -22,6 +19,7 @@ la fiche du streetArt sera visible par tous le monde.
 
 les adresses elles sont récupérées sois manuellement avec suggestion automatique «merci api-adresse.data.gouv.fr» avec une api en json,
 sois par géolocalisation avec récupération de l’adresse avec "api-adresse.data.gouv.fr reverse».
+les images sont compressée en base64 en JS pour un tranfert plus leger puis reccuperer, reconnstuit en PHP coter serveur.
 
 ---La page galerie---
 les recherches des œuvres se font soit par adresse inscrit sur la fiche ou par sa catégorie
@@ -32,10 +30,6 @@ soit par leur non, soit par street_'numéro'
 ---La page plan---
 sois dans un rayon autour d’une position GPS par géolocalisation ou d’une adresse saisie manuellement et récupération de la position GPS de la rue avec une api .
 le calcul des distances se fait dans le SQL.
-
- attention les streets entrer dans la base son basé sur Lyon,
-si vous voulez les voir par géolocalisation entrée une adresse sur Lyon,
-«exemple: place bellecour Lyon»
 
 ---La gestion compte---
 Les internautes pourront s’inscrit avec un mail valide
@@ -89,12 +83,6 @@ lire les messages envoyer sur la page contact,
 supprimer les commentaires,
 modifier et archiver ou détruire les fiches street,
 
-mot de passe pour teste les modes
-
-pseudo :loulou mdp: 3wa rôle: admin
-pseudo :tata mdp: 3wa rôle: modérateur
-pseudo :toto mdp: 3wa rôle: membre
-
 ***dossier app**
 les fichiers de conection a la base
 config.json -- mot de passe de la base
@@ -106,9 +94,7 @@ iconfont.min.css -- pour les icons qui vient de iconfont
 normalize.min.css -- heu pour normaliser les navigateur
 style.css -- tous le css du projet
 
-**database**
-le dump
-le pdf des table avec les contraintes
+
 
 **fonts**
 bakerStreet --pour l'ecriture
