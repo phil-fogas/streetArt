@@ -1,0 +1,34 @@
+
+<?php include_once('compte.phtml') ?>
+
+<section class='card'>
+    <form action="./add_categorie.php" method="post" class="form">
+
+        <div class="field">
+            <label for="categorieAd">Nom de la categorie: </label>
+            <small>Nom de la nouvelle categorie</small>
+            <input type="text" name="categorieAd" id="categorieAd">
+        </div>
+
+        <div class="">
+            <button type="submit" class="botton"><i class="icofont-ui-check"></i>Ajouter</button>
+        </div>
+
+    </form>
+    <form action="../del_categorie.php" method="post" class="form">
+
+        <div class="field">
+            <label for="categorieDel">Categorie a supprimer: </label>
+            <select name="categorieDel" id="categorieDel">
+                <option value="">--selectionner vote categorie--</option>
+                <?php foreach ($categories as $categorie) : ?>
+                    <option value="<?= $categorie['id'] ?>"><?= ucfirst($categorie['name']) ?></option>
+                <?php endforeach ?>
+            </select>
+            <div class="">
+                <button type="submit" class="botton"><i class="icofont-ui-close"></i>Supprimer</button>
+            </div>
+
+    </form>
+
+</section>

@@ -1,0 +1,42 @@
+
+<?php foreach ($streets as $street): ?>
+
+    <article class="cards articles">
+        <header>
+            <h2><?=  litenPost('detail',$street['id'], $street['name'] ) ?></h2>
+            <?php if ($street['dateCreation']) : ?>
+                <p>Street Art crée le <?= dateFr($street['dateCreation']) ?></p>
+            <?php endif ?>
+            <p>Au <?= $street['adresse'] ?></p>
+            <p><?= lienGoogle($street['adresse']) ?>
+            <?php if (!empty($street['dist'])) : ?>
+            a <a href="https://www.google.com/maps/place/<?= ($street['latitude']) ?>,<?= ($street['longitude']) ?>" title="possiton gps" target="_blank"> <?= round($street['dist'], 2) ?> Km</a>
+            <?php endif ?>
+            </p>
+            <p><?= ucfirst($street['categorie']) ?>
+             est
+             <?= ucfirst($street['statut']) ?>
+             </p>
+        </header>
+        <div class="main">
+            <img rel="prefetch" srcset="./img/<?= $street['photo'] ?>" src="./img/<?= $street['photo'] ?>" alt="<?= $street['id'].$street['name']  ?>" class="reduit" >
+            <p><?= nl2br(htmlspecialchars(apercu($street['description']))) ?></p>
+            <a href="?p=detail&id=<?= $street['id'] ?>" title="street <?= $street['id'] ?>">Plus de détails</a>
+        </div>
+        <footer>
+
+            <small>Rédigé le <?= dateFr($street['dateFiche']) ?>
+                <?php if ($street['pseudo']) : ?>
+                    Par: <b><?= $street['pseudo'] ?></b>
+                <?php endif ?>
+            </small>
+            <?php foreach ($counts as $count): ?>
+                <?php if ($count['id_street'] == $street['id']) : ?>
+                    <p>Commentaires: <?= ($count['count']) ?></p>
+                <?php endif ?>
+            <?php endforeach ?>
+        </footer>
+    </article>
+
+<?php endforeach ?>
+

@@ -1,0 +1,46 @@
+<h1>Contacter le webmaster</h1>
+
+<?php if (isset($_GET['e'])) : ?>
+    <?php if ($_GET['e'] == 1) : ?>
+        <div class="alert success">
+            Votre message est bien envoyer, vous aurais peut etre une responce dans les 48 heures
+        </div>
+    <?php elseif ($_GET['e'] == 2) : ?>
+        <div class="alert info">
+            Votre message a etais transmit en privee a l'admin
+        </div>
+         <?php elseif ($_GET['e'] == 3) : ?>
+        <div class="alert danger">
+            Votre message n'a étais transmit suite a une erreur
+        </div>
+    <?php else : ?>
+
+    <?php endif ?>
+<?php endif ?>
+<article class="article">
+<form action="./add_contact.php" method="post" class="form">
+
+    <div class="field">
+        <label for="name">Entrer votre email <i class="icofont-ui-email"></i>: </label>
+        <input type="email" name="email" id="email" placeholder="excemple: toto@streetArt.fr"
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+               <?php if (empty($_SESSION['auth']['pseudo'])): ?>
+               required
+               <?php endif ?>
+               ><span></span>
+    </div>
+    <div class="field">
+        <label for="text">Pour quel sujet: </label>
+        <input type="text" name="sujet" id="sujet">
+    </div>
+    <div class="field">
+        <label for="text">Entrer votre message: </label>
+        <textarea type="text" name="message" id="message" required></textarea>
+        <span></span>
+    </div>
+    <div class="field">
+        <button type="submit" class="botton">Envoyer</button>
+    </div>
+
+</form>
+</article>

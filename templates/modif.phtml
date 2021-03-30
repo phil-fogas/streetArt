@@ -1,0 +1,95 @@
+
+<h1>Modification street Art</h1>
+<section class='card'>
+
+    <aside>
+    <img <?= redimage('./img/'.$street['photo'].'',200); ?> rel="prefetch" src="./img/<?= $street['photo'] ?>" atl="<?= $street['name'] ?>" class="photo">
+</aside>
+
+    <form action="./up_post.php?id=<?= $street['id'] ?>" method="post" class="form" enctype='multipart/form-data'>
+
+        <div class="field">
+            <label for="name">Nom: </label>
+            <small>Nom de l'oeuvre si vous la connaiser</small>
+            <input type="text" name="name" id="name"
+                   value="<?= $street['name'] ?>">
+        </div>
+        <div class="field">
+            <label for="description">Description: </label>
+            <small>Descriver le street Art si elle est peinte, ou collée eventuellemnet le non du créateur </small>
+            <textarea type="text" name="description" id="description"><?= ($street['description']) ?></textarea>
+        </div>
+        <div class="field">
+            <label for="categorie">Catégorie: </label>
+            <small>Quelle style de street peinte, papier collée, </small>
+            <select name="categorie" id="categorie">
+                <?php foreach ($categories as $categorie) : ?>
+                    <option value="<?= $categorie['id'] ?>"
+                        <?php if ($categorie['name'] == $street['categorie']) : ?>
+                            selected
+                        <?php endif ?>
+                    >
+                        <?= ucfirst($categorie['name']) ?></option>
+                <?php endforeach ?>
+            </select>
+        </div>
+        <div class="field">
+            <label for="dateCreation">Date de création: </label>
+            <small>date de création de l'oeuvre, si vous connaiser juste l'année mettre 01/01/année de création ou
+                laisser vide</small>
+            <input type="date" name="dateCreation" id="dateCreation"
+                   value="<?= ($street['dateCreation']) ?>">
+        </div>
+        <div class="field">
+            <label for="adresse">Adresse: </label>
+            <small>Adresse ou se trouve le street Art </small>
+            <input type="text" name="adresse" id="adresse" placeholder="exemple: 23 rue du streetArt lyon"
+                   value="<?= ($street['adresse']) ?>"
+                   required>
+            <div id="adres" class="card">
+                <label for="suggestion rue">Suggestion de rue: </label><small>cliquez dessus </small>
+                <div id="address" class="card">
+                </div>
+            </div>
+        </div>
+
+        <?php if ($_SESSION['auth']['droit'] == 9) : ?>
+            <div class="field">
+                <label for="valid">vote: </label>
+                si depasse 5 elle sera visible :
+                <input type="number" name="valid" id="valid"
+                       value="<?= ($street['valid']) ?>">
+            </div>
+            <div class="field">
+                <label for="statut">statut: </label>
+                <small>Quelle style de street peinte, papier collée, </small>
+
+                <select name="statut" id="statut">
+                    <?php foreach ($statuts as $statut) : ?>
+                        <option value="<?= $statut['id'] ?>"
+                            <?php if ($statut['statut'] == $street['statut']) : ?>
+                                selected
+                            <?php endif ?>
+                        ><?= ($statut['statut']) ?></option>
+                    <?php endforeach ?>
+                </select>
+            </div>
+        <?php else : ?>
+            <div class="field">
+                <label for="valid">vote: </label>
+                si depasse 5 votes, elle sera visible par tous le monde:
+                <?= ($street['valid']) ?> votes
+                <input type="hidden" name="valid" id="valid" value="<?= ($street['valid']) ?>">
+            </div>
+
+        <?php endif ?>
+        <!--<div class="">-->
+        <!--<label for="photo">photo: </label>-->
+        <!--<input type="file" id="photo" name="photo" accept="image/png, image/jpeg, image/jpg" >-->
+        <!-- </div>-->
+        <div class="">
+            <button type="submit" class="botton"><i class="icofont-ui-check"></i>Modifier / Sauvegarder</button>
+        </div>
+    </form>
+
+</section>

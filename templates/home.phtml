@@ -1,0 +1,35 @@
+
+<h1>Passion StreetArt</h1>
+<article class="article">
+<h2><?= $bonjour ?>
+    <?php if (isset($_SESSION['auth'])) : ?>
+        <?= $_SESSION['auth']['pseudo'] ?>
+    <?php endif ?>
+</h2>
+
+<p>Vous allez découvrir ou redécouvrir l'Art urbain de votre ville.</p>
+
+<p>Trois exemples de street Art de notre <a href='./index.php?p=galerie' title="galerie"><i class="icofont-graffiti"></i> Galerie <i class="icofont-graffiti"></i></a></p>
+</article>
+
+
+<section class="card">
+
+ <?php foreach ($streets as $street): ?>
+
+    <article class="articles">
+        <header>
+            <h2><?= litenPost('detail',$street['id'], $street['name'] ) ?></h2>
+        </header>
+
+            <img  rel="prefetch" src="./img/<?= $street['photo'] ?>" alt="<?= $street['name'] ?>" class="reduit" >
+
+        <footer>
+        <a href="?p=detail&id=<?= $street['id'] ?>" title="street <?= $street['id'] ?>">Plus de détails </a>
+        </footer>
+    </article>
+
+<?php endforeach ?>
+
+
+</section>

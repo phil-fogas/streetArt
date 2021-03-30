@@ -1,0 +1,54 @@
+<?php include_once('compte.phtml') ?>
+<table>
+    <thead>
+    <tr>
+        <th>
+            pseudo
+        </th>
+        <th>
+            date creation
+        </th>
+        <th>
+            date visite
+        </th>
+        <th>
+            droit
+        </th>
+        <th>
+            suppresion
+        </th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($users as $menbre): ?>
+        <tr>
+
+            <th>
+                <?= $menbre['pseudo'] ?>
+            </th>
+            <th>
+                <?= dateFr($menbre['created_at']) ?>
+            </th>
+            <th>
+                <?= dateTimeFr($menbre['dateVisi']) ?>
+            </th>
+            <th>
+                <?= ($menbre['name']) ?>
+                <?php if ($menbre['name']!="admin"): ?>
+                <a href="./up_droit.php?id=<?= $menbre['id'] ?>&d=<?= $menbre['name'] ?>">baculer</a>
+                <?php endif ?>
+
+            </th>
+
+            <th>
+                <a class="red" href="./del_menbre.php?id=<?= $menbre['id'] ?>"> Supprimer </a>
+            </th>
+
+        </tr>
+
+    <?php endforeach ?>
+    </tbody>
+</table>
+
+

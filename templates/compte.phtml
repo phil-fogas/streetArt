@@ -1,0 +1,26 @@
+<h1>Votre compte</h1>
+
+  <b><?= $bonjour ?>
+        <?php if (isset($_SESSION['auth'])) : ?>
+            <?= $_SESSION['auth']['pseudo'] ?>
+        <?php endif ?>
+    </b>
+<section class="card">
+
+
+<nav>Gestion
+
+    <?php if ($_SESSION['auth']['droit'] == 9) : ?>
+
+        <a class="button" href='./index.php?p=categorie'  title="categorie">Cathegories</a>
+        <a class="button" href='./index.php?p=menbre' title="menbre">Menbre</a>
+        <a class="button" href='./index.php?p=message' title="message">Message</a>
+    <?php endif ?>
+
+    <a class="button" href='./index.php?p=comment' title="commentaire">Commentaires</a>
+    <a class="button" href='./index.php?p=street' title="fiche">Streets</a>
+    <a class="button" href='./deconnec.php' title="deconnection"><i class="icofont-ui-close"></i>Deconnection<i class="icofont-ui-close"></i></a>
+
+
+</nav>
+</section>

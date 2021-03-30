@@ -1,0 +1,107 @@
+<h1>Suggérer un nouveaux street Art</h1>
+
+<?php if (isset($_GET['e'])) : ?>
+    <?php if ($_GET['e'] == 1) : ?>
+        <div class="alert success">
+            Votre suggestion a étais envoyer
+        </div>
+      <?php elseif ($_GET['e'] == 2) : ?>
+        <div class="alert danger">
+            Suggestion non transmi!
+        </div>
+     <?php elseif ($_GET['e'] == 3) : ?>
+        <div class="alert danger">
+            Votre suggestion ne sera pas traiter
+        </div>
+    <?php else : ?>
+
+    <?php endif ?>
+<?php endif ?>
+<article class="article">
+    <noscript>
+        <!--si un navigateur na pas Js activée -->
+  <form action="./add_post.php" method="post" class="form" enctype='multipart/form-data'>
+
+  </noscript>
+
+    <div class="field">
+             <label for="photo">photo: </label>
+            <small>une jolie photo de l'oeuvre</small>
+            <input type="file" id="photo" name="photo" accept="image/png, image/jpeg, image/jpg" required>
+            <span></span>
+            <span class="alert2"></span>
+  </div>
+
+   <form action="./add_post.php" method="post" class="form" enctype='multipart/form-data'>
+ <div class="field">
+             <img src="./pic/bombe.png" alt="image compress" id="compressImg">
+            <input type="hidden" name="image" id="image">
+        </div>
+
+     <div class="field">
+            <label for="adresse">Adresse: </label>
+            <small>Adresse ou se trouve le street Art </small>
+            <input type="text" name="adresse" id="adresse" placeholder="exemple: 23 rue du streetArt lyon" required>
+            <span></span>
+
+            <input type="hidden" name="latitude" id="latitude" >
+            <input type="hidden" name="longitude" id="longitude" >
+
+            <div >
+             ou <a href="#" id="localise" class="button">Localise moi</a>
+
+            <p><span id="info" class="alert"></span></p>
+            </div>
+            <div id="adress" >
+                <label for="suggestion rue">Suggestion de rue: </label><small>cliquez dessus </small>
+                <div id="address" class="card">
+                </div>
+            </div>
+
+        </div>
+    <div class="field">
+            <label for="categorie">Categorie: </label>
+            <small>Quelle style de street peinte, papier collée, </small>
+            <select name="categorie" id="categorie">
+                <option value="1">selectionner votre type</option>
+                <?php foreach ($categories as $categorie) : ?>
+                    <option value="<?= $categorie['id'] ?>"><?= ucfirst($categorie['name']) ?></option>
+                <?php endforeach ?>
+            </select>
+            <?php if (isset($_SESSION['auth']) && $_SESSION['auth']['droit'] == 9) : ?>
+                <a class="blue" href="?p=categorie"> Gestion categorie </a>
+            <?php endif ?>
+
+        </div>
+        <div class="field">
+            <label for="name">Nom: </label>
+            <small>Nom de l'oeuvre si vous la connaiser</small>
+            <input type="text" name="name" id="name">
+        </div>
+        <div class="field">
+            <label for="description">Description: </label>
+            <small>Decriver le street Art eventuellemnet le nom du créateur </small>
+            <textarea type="text" name="description" id="description"></textarea>
+        </div>
+        <div class="field">
+            <label for="dateCreation">Date de création: </label>
+            <small>date de création de l'oeuvre, si vous connaiser juste l'année mettre 01/01/année de création ou
+                laisser vide</small>
+            <input type="date" name="dateCreation" id="dateCreation">
+        </div>
+
+<div class="alert2"></div>
+
+        <input type="hidden" name="user_id"
+            <?php if (isset($_SESSION['auth'])) : ?>
+                value="<?= $_SESSION['auth']['user_id'] ?>"
+            <?php else : ?>
+                value="1"
+            <?php endif ?>
+        >
+        <div class="">
+            <button type="submit" id="submit" class="botton"><i class="icofont-ui-check"></i>Suggérer</button>
+        </div>
+    </form>
+
+</article>

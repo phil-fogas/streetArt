@@ -1,0 +1,131 @@
+<?php include_once('compte.phtml') ?>
+
+<h1>Vos street Art réference</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th scope="col">
+            street
+        </th>
+        <th scope="col">
+            date création et pseudo
+        </th>
+        <th scope="col">
+            catégorie
+        </th>
+         <th scope="col">
+            status
+        </th>
+        <th scope="col">
+            date de création
+        </th>
+        <th scope="col">
+            adresse
+        </th>
+        <th scope="col">
+            photo
+        </th>
+        <th scope="col">
+            description
+        </th>
+
+        <th scope="col">
+            suppression
+        </th>
+        <th scope="col">
+            modifier
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+ <?php if (isset($streets)) : ?>
+    <?php foreach ($streets as $street): ?>
+        <tr>
+            <td scope="row">
+                <?=  litenPost('detail',$street['id'], $street['name'] ) ?>
+            </td>
+            <td>
+                <?= dateFr($street['dateFiche']) ?> Par: <?= $street['pseudo'] ?>
+            </td>
+            <td>
+                <?= $street['categorie'] ?>
+            </td>
+              <td>
+                <?= $street['statut'] ?>
+            </td>
+            <td>
+                <?= dateFr($street['dateCreation']) ?>
+            </td>
+            <td>
+                <?= $street['adresse'] ?>
+            </td>
+            <td>
+                <img <?= redimage('./img/'.$street['photo'].'',300); ?> src="./img/<?= $street['photo'] ?>" alt="<?= $street['name'] ?>">
+            </td>
+            <td>
+                <?= nl2br(htmlspecialchars($street['description'])) ?>
+            </td>
+
+            <td>
+                <a class="red" href="./archive.php?id=<?= $street['id'] ?>"><i class="icofont-ui-close"></i> Supprimer </a>
+            </td>
+            <td>
+                <a class="green" href="./index.php?p=modif&id=<?= $street['id'] ?>"><i class="icofont-ui-check"></i> Modifier </a>
+            </td>
+
+        </tr>
+
+    <?php endforeach ?>
+ <?php endif ?>
+
+    <?php if (!empty($streetAll)) : ?>
+        <!--<tr><th colspan="10" scope="row"><h2>Street laisser par les autres</h2></th></tr>-->
+
+        <?php foreach ($streetAll as $street): ?>
+            <tr>
+                <td scope="row">
+                    <?=  litenPost('detail',$street['id'], $street['name'] ) ?>
+                </td>
+                <td>
+                    <?= dateFr($street['dateFiche']) ?> Par: <?= $street['pseudo'] ?>
+                </td>
+                <td>
+                    <?= $street['categorie'] ?>
+                </td>
+                  <td>
+                <?= $street['statut'] ?>
+            </td>
+                <td>
+                    <?= dateFr($street['dateCreation']) ?>
+                </td>
+                <td>
+                    <?= $street['adresse'] ?>
+                </td>
+                <td>
+                    <img <?= redimage('./img/'.$street['photo'].'',300); ?> src="./img/<?= $street['photo'] ?>" atl="<?= $street['name'] ?>">
+                </td>
+                <td>
+                    <?= nl2br(htmlspecialchars($street['description'])) ?>
+                </td>
+
+                <td>
+                    <a class="red" href="./archive.php?id=<?= $street['id'] ?>"><i class="icofont-ui-close"></i> Supprimer</a>
+                </td>
+
+                <td>
+                    <a class="green" href="./index.php?p=modif&id=<?= $street['id'] ?>"><i class="icofont-ui-check"></i> Modifier</a>
+                </td>
+                <?php if ($_SESSION['auth']['droit'] == 9) : ?>
+                    <td>
+                        <a class="blue" href="./del_post.php?id=<?= $street['id'] ?>"> détruire</a>
+                    </td>
+                <?php endif ?>
+            </tr>
+
+        <?php endforeach ?>
+    <?php endif ?>
+    </tbody>
+</table>
+
+

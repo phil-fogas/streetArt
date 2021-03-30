@@ -1,0 +1,31 @@
+<h1>Connection</h1>
+<?php if (isset($_GET['e'])): ?>
+<div class="alert danger">
+<p>erreure de connection:
+<?php if ($_GET['e']==2): ?>
+Mais qui es tu ?
+<?php elseif ($_GET['e']==3): ?>
+Oui mais ?
+<?php endif ?>
+</p>
+</div>
+<?php endif ?>
+<form action="./connection.php" method="post" class="form">
+    <div class="field">
+        <label for="name">Entrer votre pseudo ou email: </label>
+        <input type="text" name="pseudo" id="pseudo" required><span></span>
+    </div>
+    <div class="field">
+        <label for="password">Entrer votre mot de pass: </label>
+        <input type="password" name="password" id="password" required><span></span>
+    </div>
+    <div class="field">
+        <button type="submit" class="button"><i class="icofont-ui-check"></i>Entrer</button>
+    </div>
+    <?php if (empty($_SESSION['auth'])) : ?>
+        <div class="">
+            <a href="?p=oublier" title="mot de pass oublier">Mot de pass oublier</a>
+            <a href="?p=addCompte" title="Création compte">Création compte</a>
+        </div>
+    <?php endif ?>
+</form>
