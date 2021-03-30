@@ -1,8 +1,8 @@
 {
   "connection": {
-    "dbname": "live-38_philippebri_street",
-    "host": "home.3wa.io:3307",
-    "user": "philippebri",
-    "password": "d7d265c7MTBkN2FlYmRjOTEzNjY0YmVmZDNiNDVk087fa4ce"
+    "dbname": "",
+    "host": "",
+    "user": "",
+    "password": "d"
   }
 }
