@@ -30,7 +30,12 @@ private $host = ''; // URL to redirect
      {
      $url.="&e=".$e;
       }
-     header("Location: ".$this->host."".$url."");
+      if (empty($url))
+      {
+      $url=$_SERVER['HTTP_REFERER'];
+      }
+
+      header("Location: ".$this->host."".$url."");
      }
 
 // deconnection
