@@ -1,4 +1,5 @@
-# street Art
+# street Art 
+blog en poo
 sites sur le street Art projet de fin de formation,
 
 Site pour référencer les streets Art,
@@ -83,11 +84,17 @@ lire les messages envoyer sur la page contact,
 supprimer les commentaires,
 modifier et archiver ou détruire les fiches street,
 
+index.php router
 ***dossier app**
 les fichiers de conection a la base
 config.json -- mot de passe de la base
 Database.php -- gestion des requete
 function.php --- gestion des function en php
+
+*** controlleur ***
+layaout.php -- pour geneere le layaout
+vue.php -- pour controler les vue
+modif.php-- pour controler setup
 
 **css**
 iconfont.min.css -- pour les icons qui vient de iconfont
