@@ -22,6 +22,7 @@ la fiche du streetArt sera visible par tous le monde.
 
 les adresses elles sont récupérées sois manuellement avec suggestion automatique «merci api-adresse.data.gouv.fr» avec une api en json,
 sois par géolocalisation avec récupération de l’adresse avec "api-adresse.data.gouv.fr reverse».
+l'image et compressée en base64 en JS pour transfer plus leger,recuperée et reconstiuée en PHP sur le serveur.
 
 ---La page galerie---
 les recherches des œuvres se font soit par adresse inscrit sur la fiche ou par sa catégorie
@@ -132,4 +133,5 @@ je crois que ces les templates en .phtml
 de chaque pages
 
 **uploads**
-dossier temporaire le tepms de la redimention des images
+dossier temporaire le temps de la redimention des images
+

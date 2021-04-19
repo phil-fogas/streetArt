@@ -1,26 +1,32 @@
 <h1>Votre compte</h1>
+<!-- page compte -->
 
-  <b><?= $bonjour ?>
-        <?php if (isset($_SESSION['auth'])) : ?>
-            <?= $_SESSION['auth']['pseudo'] ?>
-        <?php endif ?>
-    </b>
+<!-- salutation -->
+<div class="centre">
+     <strong>
+    <?= bienvenu(); ?>
+	<?php if (isset($_SESSION['auth'])) : ?>
+	<?= $_SESSION['auth']['pseudo'] ?>
+	<?php endif ?>
+ </strong>
+</div>
+
 <section class="card">
 
-
-<nav>Gestion
-
-    <?php if ($_SESSION['auth']['droit'] == 9) : ?>
-
-        <a class="button" href='./index.php?p=categorie'  title="categorie">Cathegories</a>
-        <a class="button" href='./index.php?p=menbre' title="menbre">Menbre</a>
-        <a class="button" href='./index.php?p=message' title="message">Message</a>
-    <?php endif ?>
-
-    <a class="button" href='./index.php?p=comment' title="commentaire">Commentaires</a>
-    <a class="button" href='./index.php?p=street' title="fiche">Streets</a>
-    <a class="button" href='./deconnec.php' title="deconnection"><i class="icofont-ui-close"></i>Deconnection<i class="icofont-ui-close"></i></a>
-
-
-</nav>
+	<!-- lien vers different page lier au droit-->
+	<nav>
+		Gestion
+		<?php if ($_SESSION['auth']['droit'] == 9) : ?>
+		<a class="button" href='?p=categorie'  title="categorie">Cathegories</a>
+		<a class="button" href='?p=menbre' title="menbre">Menbre</a>
+		<a class="button" href='?p=message' title="message">Message</a>
+		<?php endif ?>
+		<a class="button" href='?p=comment' title="commentaire">Commentaires</a>
+		<a class="button" href='?p=street' title="fiche">Streets</a>
+		<a class="button" href='?p=deconnec' title="deconnection">
+			<i class="icofont-ui-close"></i>
+			Deconnection
+			<i class="icofont-ui-close"></i>
+		</a>
+	</nav>
 </section>

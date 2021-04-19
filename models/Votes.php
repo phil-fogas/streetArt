@@ -10,13 +10,12 @@ class Votes extends Database
     {
         parent::__construct();
 
-
     }
 
 
     public function vote(): array
     {
-
+        // verification sur le vote du menbre
         $sql = ("SELECT chose FROM `validation` WHERE `id_user` = :id_user AND `id_street` = :id ;");
 
         if (!empty($_SESSION)) {
@@ -27,7 +26,7 @@ class Votes extends Database
 
     public function addVote(array $params): string
     {
-
+        // ajout vote
         $sql = ("UPDATE `street` SET `valid` = `valid`+:valid WHERE `street`.`id` = :id ;");
 
         $param = ([

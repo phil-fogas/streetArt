@@ -1,105 +1,123 @@
 <h1>Détail du street Art</h1>
 <section class="galerie">
+	<!-- page detailer de fiche -->
+	<article class="card article">
+		<header >
+			<?php if ($street['name']) : ?>
+			<h2><?= nl2br(htmlspecialchars($street['name'])) ?></h2>
+			<?php else : ?>
+			<h2><?= nl2br(htmlspecialchars('street '.$street['id'])) ?></h2>
+			<?php endif ?>
+			<?php if ($street['dateCreation']) : ?>
+			<p>
+				Street Art créer vers
+				<?= dateFr($street['dateCreation']) ?>
+			</p>
+			<?php endif ?>
+			<p>
+				Au
+				<?= $street['adresse'] ?>
+			</p>
+			<p>
+				<?= lienGoogle($street['adresse']) ?>
+			</p>
+			<p>
+				dans la categorie:
+				<?= ucfirst($street['categorie']) ?>
+			</p>
+			<p>
+				statut:
+				<?= $street['statut'] ?>
+			</p>
+		</header>
+		<main >
+			<img rel="prefetch" src="<?= $this->root ?>/img/<?= $street['photo'] ?>" atl="<?= $street['name'] ?>" class="photo">
+			<p>
+				Description:
+			</p>
+			<p>
+				<?= nl2br(htmlspecialchars($street['description'])) ?>
+			</p>
+		</main>
+		<footer >
+			<small>
+				Rédigé le
+				<?= dateFr($street['dateFiche']) ?>
+				<?php if (isset($street['pseudo'])) : ?>
+				Par:
+				<b><?= $street['pseudo'] ?></b>
+				<?php endif ?>
+			</small>
+		</footer>
+		<?php if (isset($_SESSION['auth'])) : ?>
+    <!-- verifie deja voter -->
+		<?php if (empty($vote['chose'])) : ?>
+		Voulez vous réference cette oeuvre
+		<a class="green" href="?p=vote&id=<?= $street['id'] ?>&vote=oui" title="vote oui"><i class="icofont-ui-check"></i> OUI </a>
+		<a class="red" href="?p=vote&id=<?= $street['id'] ?>&vote=non"  title="vote non"><i class="icofont-ui-close"></i> NON </a>
+		<?php endif ?>
+		<!-- action pour admin -->
+		<?php if ($_SESSION['auth']['droit'] == 9) : ?>
+		<p>
+			Voulez vous le
+			<a class="red" href="?p=delposts&id=<?= $street['id'] ?>"  title="del post"><i class="icofont-ui-close"></i> Suprimer </a>
+			l'
+			<a class="blue" href="?p=archive&id=<?= $street['id'] ?>"  title="archivage"> Archiver </a>
+			ou le
+			<a class="green" href="?p=modif&id=<?= $street['id'] ?>"  title="modif post"><i class="icofont-ui-check"></i> Modifier </a>
+		</p>
+		<?php endif ?>
+    <!-- pour les moderateur -->
+		<?php if ($_SESSION['auth']['droit'] == 5) : ?>
+		<p>
+			Voulez vous le modifier
+			<a class="green" href="?p=modif&id=<?= $street['id'] ?>" title="modif post"><i class="icofont-ui-check"></i> Modifier </a>
+		</p>
+		<?php endif ?>
 
-    <article class="card article">
-        <header >
-            <?php if ($street['name']) : ?>
-            <h2><?= nl2br(htmlspecialchars($street['name'])) ?></h2>
-            <?php else : ?>
-                <h2><?= nl2br(htmlspecialchars('street '.$street['id'])) ?></h2>
-            <?php endif ?>
-            <?php if ($street['dateCreation']) : ?>
-                <p>Street Art créer vers <?= dateFr($street['dateCreation']) ?></p>
-            <?php endif ?>
-            <p>Au <?= $street['adresse'] ?></p>
-            <p><?= lienGoogle($street['adresse']) ?></p>
-            <p>dans la categorie: <?= ucfirst($street['categorie']) ?></p>
-            <p>statut: <?= $street['statut'] ?></p>
-        </header>
-        <main >
-            <img rel="prefetch" src="./img/<?= $street['photo'] ?>" atl="<?= $street['name'] ?>" class="photo">
-            <p>Description:</p>
-            <p><?= nl2br(htmlspecialchars($street['description'])) ?></p>
-        </main>
-        <footer >
-
-            <small>Rédigé le <?= dateFr($street['dateFiche']) ?>
-                <?php if (isset($street['pseudo'])) : ?>
-                    Par: <b><?= $street['pseudo'] ?></b>
-                <?php endif ?>
-
-            </small>
-        </footer>
-        <?php if (isset($_SESSION['auth'])) : ?>
-
-            <?php if (empty($vote['chose'])) : ?>
-                Voulez vous réference cette oeuvre
-                <a class="green" href="./vote.php?id=<?= $street['id'] ?>&vote=oui" title="vote oui"><i class="icofont-ui-check"></i> OUI </a>
-                <a class="red" href="./vote.php?id=<?= $street['id'] ?>&vote=non"  title="vote non"><i class="icofont-ui-close"></i> NON </a>
-            <?php endif ?>
-
-            <?php if ($_SESSION['auth']['droit'] == 9) : ?>
-                <p>
-                    Voulez vous le
-                    <a class="red" href="./del_post.php?id=<?= $street['id'] ?>"  title="del post"><i class="icofont-ui-close"></i> Suprimer </a>
-                    l'
-                    <a class="blue" href="./archive.php?id=<?= $street['id'] ?>"  title="archivage"> Archiver </a>
-                    ou le
-                    <a class="green" href="./index.php?p=modif&id=<?= $street['id'] ?>"  title="modif post"><i class="icofont-ui-check"></i> Modifier </a>
-                </p>
-            <?php endif ?>
-
-            <?php if ($_SESSION['auth']['droit'] == 5) : ?>
-                <p>
-                    Voulez vous le modifier
-                    <a class="green" href="./index.php?p=modif&id=<?= $street['id'] ?>" title="modif post"><i class="icofont-ui-check"></i> Modifier </a>
-                </p>
-            <?php endif ?>
-
-        <?php endif ?>
-
-        <form action="./add_comment.php" method="post" class="form">
-
-            <div class="field">
-                <label for="text">Votre commentaire: </label>
-                <textarea type="text" name="comment" id="comment" required></textarea>
-            </div>
-            <input type="hidden" name="street" value="<?= $street['id'] ?>">
-            <?php if (isset($_SESSION['auth'])) : ?>
-                <input type="hidden" name="user_id" value="<?= $_SESSION['auth']['user_id'] ?>">
-            <?php else : ?>
-                <input type="hidden" name="user_id" value="1">
-            <?php endif ?>
-            <div class="field">
-                <button type="submit" class="botton">Envoyer <i class="icofont-ui-check"></i></button>
-            </div>
-
-        </form>
-
-
-        <aside class="card">
-
-            <h3>Vos commentaires</h3>
-
-            <ul>
-
-                <?php foreach ($comments as $comment): ?>
-                    <li>
-                        <i class="icofont-comment"></i>  <small>Commentée le <?= dateFr($comment['date_ad']) ?> Par: <b><?= $comment['pseudo'] ?></b> </small>
-                        <p><?= nl2br(htmlspecialchars($comment['text'])) ?>
-                            <?php if (!empty($_SESSION)) : ?>
-                                <?php if ($_SESSION['auth']['droit'] == 9 || $_SESSION['auth']['pseudo'] == $comment['pseudo']) : ?>
-                                    | <a class="red" href="./del_comment.php?id=<?= $comment['id'] ?>"><i class="icofont-ui-close"></i> Suprimer </a>
-                                <?php endif ?>
-                            <?php endif ?>
-                        </p>
-                    </li>
-                <?php endforeach ?>
-            </ul>
-
-        </aside>
-
-    </article>
-
-
+		<?php endif ?>
+		<form action="?p=setcomment" method="post" class="form">
+			<!-- ajoute commentaire -->
+			<div class="field">
+				<label for="text">Votre commentaire: </label>
+				<textarea type="text" name="comment" id="comment" required></textarea>
+			</div>
+			<input type="hidden" name="street" value="<?= $street['id'] ?>">
+			<?php if (isset($_SESSION['auth'])) : ?>
+			<input type="hidden" name="user_id" value="<?= $_SESSION['auth']['user_id'] ?>">
+			<?php else : ?>
+			<input type="hidden" name="user_id" value="1">
+			<?php endif ?>
+			<div class="field">
+				<button type="submit" class="botton">Envoyer <i class="icofont-ui-check"></i></button>
+			</div>
+		</form>
+		<aside class="card">
+			<h3>Vos commentaires</h3>
+			<!-- liste des commentaire -->
+			<ul>
+				<?php foreach ($comments as $comment): ?>
+				<li>
+					<i class="icofont-comment"></i>
+					<small>
+						Commentée le
+						<?= dateFr($comment['date_ad']) ?>
+						 Par:
+						<b><?= $comment['pseudo'] ?></b>
+					</small>
+					<p>
+						<?= nl2br(htmlspecialchars($comment['text'])) ?>
+						<?php if (!empty($_SESSION)) : ?>
+                     <!--  les admin et l'user peut suprimer -->
+						<?php if ($_SESSION['auth']['droit'] == 9 || $_SESSION['auth']['pseudo'] == $comment['pseudo']) : ?>
+						|
+						<a class="red" href="?p=delcomment&id=<?= $comment['id'] ?>"><i class="icofont-ui-close"></i> Suprimer </a>
+						<?php endif ?>
+						<?php endif ?>
+					</p>
+				</li>
+				<?php endforeach ?>
+			</ul>
+		</aside>
+	</article>
 </section>

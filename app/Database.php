@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 abstract class Database
 {
     protected PDO $pdo;
@@ -31,7 +30,7 @@ abstract class Database
                 );
 
             }
-            $this->db= $this->pdo;
+            $this->db = $this->pdo;
         } catch (PDOException $e) {
             echo 'Echec de la connexion : ' . $e->getMessage();
             exit;

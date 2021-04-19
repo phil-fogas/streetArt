@@ -16,14 +16,16 @@ use Database;
 
     public function getCategorieAll(): array
     {
-        $sql = ("SELECT id,name FROM `categorie` ORDER BY `categorie`.`name` ASC;");
+        //liste de tout les  categorie
+        $sql = ("SELECT id,name FROM `categorie` ORDER BY `categorie`.`name` ASC ;");
 
         $categories = $this->fetchAll($sql);
         return $categories;
     }
      public function setCategorie(array $params): string
      {
-         $sql = ("INSERT INTO `categorie` (`id`, `name`) VALUES (NULL, :name );");
+         //ajout de categorie
+         $sql = ("INSERT INTO `categorie` (`id`, `name`) VALUES (NULL, :name ) ;");
          $params = ([
              'name'=> $params['name'],
          ]
@@ -32,8 +34,10 @@ use Database;
          $categorie = $this->into($sql,$params );
          return $categorie;
      }
+
      public function delCategorie(array $params): int
      {
+         //supretion  de une categorie
          $sql = ("DELETE FROM `categorie` WHERE `categorie`.`id` = :id ;");
          $params = ([
              'id'=> $params['id'],

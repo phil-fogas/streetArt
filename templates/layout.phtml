@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html class="no-js" lang="fr-FR">
+    <!-- pour les anciens ie avant de disparaitre -->
 <!--<html lang="fr" dir="ltr"> -->
 <!--[if lte IE 7]>
 <html class="ie67 ie678" lang="fr"> <![endif]-->
@@ -17,41 +18,41 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <title><?= $titre ?></title>
-    <link rel="preload" href="./css/style.css" as="style">
-    <link rel="stylesheet" href="./css/normalize.min.css">
-    <link rel="stylesheet" href="./css/icofont.min.css">
-    <link rel="stylesheet" href="./css/style.css">
-
-    <link rel="apple-touch-icon" sizes="72x72" href="./pic/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./pic/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./pic/favicon-16x16.png">
-    <link rel="manifest" href="./pic/site.webmanifest">
-    <link rel="mask-icon" href="./pic/safari-pinned-tab.svg" color="#5bbad5">
+    <title><?= $this->titre ?></title>
+    <link rel="preload" href="<?= $this->root ?>/css/style.css" as="style">
+    <link rel="stylesheet" href="<?= $this->root ?>/css/normalize.min.css">
+    <link rel="stylesheet" href="<?= $this->root ?>/css/icofont.min.css">
+    <link rel="stylesheet" href="<?= $this->root ?>/css/style.css">
+    <!-- facicon tous navigateur -->
+    <link rel="apple-touch-icon" sizes="72x72" href="<?= $this->root ?>/pic/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= $this->root ?>/pic/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= $this->root ?>/pic/favicon-16x16.png">
+    <link rel="manifest" href="<?= $this->root ?>/pic/site.webmanifest">
+    <link rel="mask-icon" href="<?= $this->root ?>/pic/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="./pic/ms-icon-144x144.png">
+    <meta name="msapplication-TileImage" content="<?= $this->root ?>/pic/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-
+    <!-- pour les mobiles -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-touch-fullscreen" content="yes">
+    <!-- pour le referencement -->
     <meta property="og:locale" content="fr_FR" />
-    <meta property="og:title" content="<?= $titre ?>" />
-    <meta name="description" lang="fr" content="<?= $descrition ?>'"/>
+    <meta property="og:title" content="<?= $this->titre ?>" />
+    <meta name="description" lang="fr" content="<?= $this->description ?>'"/>
     <meta name="robots" content="index,follow" />
     <meta name="language" content="fr">
 </head>
 
 <body class="">
-
+<!-- dark mode -->
 <a id="dark">Activer le thème jour/nuit</a>
 <div class="ciel">
-
+<!-- les nuages qui bouge -->
     <div class="toit">
+        <!-- dessin du toit -->
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              width="100%" height="100%" viewBox="0 0 1000 90"  xml:space="preserve">
             <defs>
@@ -71,7 +72,7 @@
 
             <polygon points="800 0, 150 0, -150 190, 1100 190" fill="url(#scales)"  />
         </svg>
-
+<!-- publicité -->
         <div class="pub">
 
             <div><a href="https://www.la-passion.fr" title="la-passion.fr"><img src="https://www.la-passion.fr/pub/passion.png" alt="www.la-passion.fr"><p>www.la-passion.fr</p></a>
@@ -89,26 +90,28 @@
 </div>
 
 <div class="container">
+
     <header class="header">
         <nav class="nav">
-            <a href='./index.php' title="accueil"><i class="icofont-home"></i> Accueil</a>
-            <a href='./index.php?p=galerie' title="galerie"><i class="icofont-graffiti"></i> Galerie</a>
+            <a href='?p=accueil' title="accueil"><i class="icofont-home"></i> Accueil</a>
+            <a href='?p=galerie' title="galerie"><i class="icofont-graffiti"></i> Galerie</a>
             <?php if (!empty($_SESSION)) : ?>
-                <a href='./index.php?p=compte' title="compte"><i class="icofont-user"></i> Compte</a>
+                <a href='?p=compte' title="compte"><i class="icofont-user"></i> Compte</a>
             <?php endif ?>
-            <a href='./index.php?p=plan' title="plan"><i class="icofont-search-map"></i> Plan</a>
-            <a href='./index.php?p=suggestion' title="suggestion">Suggestion</a>
-            <a href='./index.php?p=jeux' title="game"><i class="icofont-ui-game"></i> Jeux</a>
+            <a href='?p=plan' title="plan"><i class="icofont-search-map"></i> Plan</a>
+            <a href='?p=suggestion' title="suggestion">Suggestion</a>
+            <a href='?p=jeux' title="game"><i class="icofont-ui-game"></i> Jeux</a>
         </nav>
     </header>
 
     <main class="main">
-<div class="centre">
-        <?php require_once(''.$template.'.phtml'); ?>
-</div>
+
+        <?php require_once(''.$this->template.'.phtml'); ?>
+
     </main>
 
     <footer class="footer">
+
         <fieldset>
             <legend>Divers</legend>
             <div class="contact">
@@ -118,13 +121,14 @@
                     <?php if (empty($_SESSION['auth'])) : ?>
                     <a href="?p=connection" title="login"><i class="icofont-ui-lock"></i> connection</a>
                      <?php else : ?>
-                    <a  href='./deconnec.php' title="deconnection">Deconnection <i class="icofont-ui-close"></i> </a>
+                    <a  href='?p=deconnec' title="deconnection">Deconnection <i class="icofont-ui-close"></i> </a>
                     <?php endif ?>
                     <a href="?p=propos" title="a propos">A propos</a>
                 </nav>
 
             </div>
         </fieldset>
+        <!-- pour la lampe qui change selon dark -->
         <div class="lampe">
 
         </div>
@@ -136,13 +140,14 @@
                 </a>
             </nav>
         </div>
+        <!-- pour la lampadaire qui change selon dark -->
         <div class="lampadaire">
 
         </div>
         <fieldset>
             <legend>Reseaux</legend>
             <div class="reseau">
-
+            <!-- reseau -->
                 <nav>
                     <a href="https://www.facebook.com/groups/baladeludiquelyon" title="facebook"><i class="icofont-facebook"></i> facebock</a>
                     <a href="https://la-passion.fr/streetArt/" title="streetArt.la-passion.fr"><i class="icofont-web"></i> street art</a>
@@ -156,9 +161,9 @@
     <p>Copyright &copy;2021</p>
 </div>
 <?php if (!empty($stript)) : ?>
-<script src="./js/<?= $stript  ?>"></script>
+<script src="<?= $this->root ?>/js/<?= $stript  ?>"></script>
 <?php endif ?>
-    <script src="./js/street.js"></script>
+    <script src="<?= $this->root ?>/js/street.js"></script>
 
 </body>
 </html>

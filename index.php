@@ -1,18 +1,17 @@
 <?php
 declare(strict_types=1);
 session_start();
-
 date_default_timezone_set('Europe/Paris');
 setlocale(LC_TIME, "fr_FR");
-
 $titre = 'street art';
 
-
-require_once('./app/Database.php');
+define('ROOT', str_replace('index.php','',$_SERVER['SCRIPT_FILENAME']));
+$root ='.';
+require_once(ROOT.'/app/Database.php');
 
 //$db = new Database();
 
-require_once('./app/function.php');
+require_once(ROOT.'/app/function.php');
 
 use street\Categorie;
 use street\Comments;
@@ -21,197 +20,400 @@ use street\Posts;
 use street\Statuts;
 use street\Messages;
 use street\Votes;
-require_once('./models/Votes.php');
-$votes = new Votes();
+use street\Vue;
+use street\Modif;
 
-require_once('./models/Messages.php');
-$messages = new Messages();
+require_once(ROOT.'/models/Votes.php');
+//$votes = new Votes();
 
-require_once('./models/Posts.php');
-$posts = new Posts();
+require_once(ROOT.'/models/Messages.php');
+//$messages = new Messages();
 
-require_once('./models/Categorie.php');
-$categories = new Categorie();
+require_once(ROOT.'/models/Posts.php');
+//$posts = new Posts();
 
-require_once('./models/Comments.php');
-$comments = new Comments();
+require_once(ROOT.'/models/Categorie.php');
+//$categories = new Categorie();
 
-require_once('./models/Statuts.php');
-$statuts = new Statuts();
+require_once(ROOT.'/models/Comments.php');
+//$comments = new Comments();
 
-require_once('./models/Users.php');
+require_once(ROOT.'/models/Statuts.php');
+//$statuts = new Statuts();
+
+require_once(ROOT.'/models/Users.php');
 $users = new Users();
 
-
+require_once(ROOT.'/controller/vue.php');
+//$vue = new Vue();
+require_once(ROOT.'/controller/modif.php');
 
 /* selon les droit adminitratif
 * affichage d'une partie des post
 */
 
-if (!empty($_SESSION['auth'])) {
-
-    $droits =$users->droit( $_SESSION['auth']['user_id']);
-}else{
+    if (!empty($_SESSION['auth']))
+    {
+    $droits =$users->droit($_SESSION['auth']['user_id']);
+    }else{
     $droits =$users->droit('');
-}
+    }
 
-/*
-*/
 
-$bonjour = bienvenu();
+/* routeur */
+if (isset($_GET['p']))
+{
+    $p = strtolower(htmlentities($_GET['p'], ENT_QUOTES));
 
-if (isset($_GET['p'])) {
-
-    if ($_GET['p'] == 'galerie')
+    if (isset($_GET['id']))
     {
-         $categories = $categories->getCategorieAll();
-        $template = 'galerie';
-    }
-
-    if ($_GET['p'] == 'detail' && isset($_GET['id']))
-    {
-        $_GET['id']= str_replace('street_', '', $_GET['id']);
-
-        if (is_numeric($_GET['id'])){
-            $street = $posts->getPost();
-        }else {
-            $street = $posts->getPostName();
-
-        }
-
-        $id=$street['id'];
-        if (!empty($street)) {
-            $comments = $comments->getComments($id);
-            $vote = $votes->vote();
-
-            $template = 'detail';
-        }else{$template = '404'; }
-    }
-
-    if ($_GET['p'] == 'plan')
-    {
-
-        $template = 'plan';
-    }
-
-    if ($_GET['p'] == 'suggestion')
-    {
-        $categories = $categories->getCategorieAll();
-        $template = 'suggestion';
-    }
-
-    if ($_GET['p'] == 'contact')
-    {
-
-        $template = 'contact';
-    }
-    if ($_GET['p'] == 'addCompte')
-    {
-
-        $template = 'addCompte';
-    }
-    if ($_GET['p'] == 'connection')
-    {
-
-        $template = 'connection';
-    }
-    if ($_GET['p'] == 'oublier')
-    {
-
-        $template = 'oublier';
-    }
-    if ($_GET['p'] == 'propos')
-    {
-        $count=$posts->countPostAll();
-        $template = 'propos';
-    }
-    if ($_GET['p'] == 'jeux')
-    {
-
-    // $images=$posts->getPostAllrandom('5', '2',1 );
-    // file_put_contents('./images.json', json_encode($images));
-
-        $stript='ping.js';
-        $template = 'jeux';
-    }
-    if ($_GET['p'] == 'message'&& $droits['droit'] == 9 ) {
-    $messages=$messages->getMessageAll();
-        $template = 'message';
-    }
-    if ($_GET['p'] == 'menbre'&& $droits['droit'] == 9 ) {
-
-        $users = $users->getMenberAll();
-
-        $template = 'menbre';
-    }
-    if ($_GET['p'] == 'compte' && !empty($_SESSION['auth']) )
-    {
-
-        $template = 'compte';
-    }
-    if ($_GET['p'] == 'categorie'&& $droits['droit'] == 9 )
-    {
-        $categories = $categories->getCategorieAll();
-        $template = 'categorie';
-    }
-    if ($_GET['p'] == 'comment')
-    {
-        $comment = $comments->getCommentsAllMenber($_SESSION['auth']['user_id']);
-
-        if ($_SESSION['auth']['droit'] == 9 || $_SESSION['auth']['droit'] == 5)
-        {
-            $commentsAll = ($comments->getCommentsAll() );
-        }
-
-        $template = 'comment';
-    }
-
-    if ($_GET['p'] == 'street' && !empty($_SESSION['auth']) )
-    {
-        if ($_SESSION['auth']['droit'] == 2 && $droits['droit'] == 2){
-        $streets = $posts->getPostAllMenber( $_SESSION['auth']['user_id']);
-}
-        if ($_SESSION['auth']['droit'] == 9 && $droits['droit'] == 9 || $_SESSION['auth']['droit'] == 5 && $droits['droit'] == 5) {
-            $streetAll = $posts->getPostAllMenbers();
-            //$statuts = $statuts->getStatutAll();
-
-        }
-        $template = 'street';
-    }
-
-    if ($_GET['p'] == 'modif' && isset($_GET['id']) && !empty($_SESSION['auth']))
-    {
-
-          $street = $posts->getPost();
-
-    if ($_SESSION['auth']['droit'] == 9 && $droits['droit'] == 9 || $_SESSION['auth']['droit'] == 5 && $droits['droit'] == 5
-    || $_SESSION['auth']['pseudo']==$street['pseudo']) {
-        $categories = $categories->getCategorieAll();
-        $statuts = $statuts->getStatutAll();
-         $template = 'modif';
+    $id = strtolower(htmlentities($_GET['id'], ENT_QUOTES));
+   // on force int si numeric
+     if (is_numeric($id))
+      {
+      $id=(int) $id;
       }
+    }
+    if (isset($_GET['e']))
+    {
+    $e = (int) $_GET['e'];
+    }else{
+    $e=0;
+    }
+}
+
+
+if (isset($p))
+{
+$vue = new Vue($p);
+$modifs = new Modif();
+
+//page acceuiel
+ if ($p =='accueil')
+    {
+    $vue->getAccueil($droits);
+    }
+//page galeerie
+   elseif ($p == 'galerie')
+    {
+
+    $vue->getGalerie($droits);
 
     }
+//fiche detail
+    elseif ($p == 'detail')
+    {
+        if (isset($id))
+        {
+        $id = str_replace('street_', '', $id);
+        // on verifie si id est numerique si on recuper id de la fiche
+        $vue->getDetail($droits,$id);
+        } else {
+        // si fiche n'est pas trouver'
+        $vue->get404();
+        }
+    }
+//plan
+    elseif ($p == 'plan')
+    {
 
+         $vue->getPlan();
+    }
+// sugestion
+    elseif ($p == 'suggestion')
+    {
+        $vue->getSuggestion($e);
+    }
+//contact
+    elseif ($p == 'contact')
+    {
+
+         $vue->getContact($e);
+    }
+// envoie mail de contact
+    elseif ($p == 'adcontact')
+    {
+
+         $modifs->setContact($e);
+    }
+// creation de compte
+    elseif ($p == 'addcompte')
+    {
+
+         $vue->getAddcompte();
+    }
+// connection
+    elseif ($p == 'connection')
+    {
+
+         $vue->getConnection($e);
+    }
+// verification la connection
+    elseif ($p == 'setconnection')
+    {
+         $modifs->setConnection();
+    }
+// oublier
+    elseif ($p == 'oublier')
+    {
+         $vue->getOublier();
+    }
+// modifi de mot passe oubmier
+   elseif ($p == 'setoublier')
+    {
+         $modifs->setOublier();
+    }
+//propos
+    elseif ($p == 'propos')
+    {
+        $vue->getPropos();
+    }
+//juex
+    elseif ($p == 'jeux')
+    {
+
+       $vue->getJeux();
+    }
+// liste des messege pour admin
+    elseif ($p == 'message')
+    {
+        if ($droits['droit'] == 9)
+        {
+        $vue->getMessage();
+        }else{
+         $vue->get404();
+        }
+
+    }
+// del message
+ elseif ($p == 'delmessage')
+    {
+        if ($droits['droit'] == 9)
+        {
+        $modifs->delMessage($id);
+        }else{
+         $vue->get404();
+        }
+
+    }
+// liste des user menbre pour admin
+    elseif ($p == 'menbre')
+    {
+       if ($droits['droit'] == 9)
+        {
+        $vue->getMenbre();
+
+         } else {
+         $vue->get404();
+        }
+    }
+// compte
+    elseif ($p == 'compte')
+    {
+        if(!empty($_SESSION['auth']))
+        {
+        $vue->getCompte();
+        } else {
+        $vue->get404();
+        }
+    }
+// creation compte
+  elseif ($p == 'adcomptes')
+    {
+        if(isset($_POST))
+        {
+        $modifs->addComptes();
+        } else {
+        $vue->get404();
+        }
+    }
+  // getion categorie pour adimn
+    elseif ($p == 'categorie')
+    {
+        if ($droits['droit'] == 9)
+        {
+
+        $vue->getCategorie();
+
+        } else {
+         $vue->get404();
+        }
+    }
+// modif categorie par admin
+  elseif ($p == 'setcategorie')
+    {
+        if ($droits['droit'] == 9)
+        {
+
+        $modifs->setCategorie();
+        } else {
+         $vue->get404();
+        }
+    }
+// mise en achive
+     elseif ($p == 'archive')
+    {
+       
+        $modifs->setArchive((int) $id);
+      
+    }
+
+// del fiche post
+    elseif ($p == 'delposts')
+    {
+        if (!empty($id))
+        {
+        $modifs->delPosts($id);
+        }else {
+        $vue->get404();
+        }
+    }
+// mdoif vote
+    elseif ($p == 'vote')
+    {
+        
+        $modifs->vote($id);
+       
+    }
+// creation fiche post
+     elseif ($p == 'upposts')
+    {
+        if (!empty($_FILES) && $_FILES['photo']['error']==1)
+        {
+        $_FILES['photo']=null;
+        $vue->getSuggestion(2);
+        }
+
+       if (!empty($_POST))
+        {
+        $modifs->upPosts($id);
+        } else {
+        $vue->get404();
+        }
+    }
+// modif fiche post
+     elseif ($p == 'setposts')
+    {
+
+       if (!empty($_POST))
+        {
+        $modifs->setPosts();
+        } else {
+        $vue->get404();
+        }
+    }
+// del catgorie par admin
+      elseif ($p == 'delcategories')
+    {
+        if ($droits['droit'] == 9)
+        {
+
+        $modifs->delCategories();
+
+        } else {
+         $vue->get404();
+        }
+    }
+// modif droit par admin
+      elseif ($p == 'updroit')
+    {
+        if ($droits['droit'] == 9)
+        {
+
+        $modifs->updroit($id);
+
+        } else {
+         $vue->get404();
+        }
+    }
+// liste des comments pour admin
+    elseif ($p == 'comment')
+    {
+        if(!empty($_SESSION['auth']))
+        {
+        $vue->getComment();
+        } else {
+         $vue->get404();
+        }
+
+    }
+// ajout comment
+  elseif ($p == 'setcomment')
+    {
+        if(!empty($_SESSION['auth']))
+        {
+        $modifs->setComment();
+        } else {
+         $vue->get404();
+        }
+
+    }
+// del comment
+    elseif ($p == 'delcomment')
+    {
+        if(!empty($_SESSION['auth']))
+        {
+        $modifs->delComments($id);
+        } else {
+         $vue->get404();
+        }
+
+    }
+// del user menbre
+      elseif ($p == 'delmenbre')
+    {
+        if(!empty($_SESSION['auth']))
+        {
+        $modifs->delMenbre($id);
+        } else {
+         $vue->get404();
+        }
+
+    }
+// liste des fiches
+    elseif ($p == 'street')
+    {
+    
+        if(!empty($_SESSION['auth']) )
+        {
+        $vue->getStreet($droits);
+
+        } else {
+       $vue->get404();
+        }
+    }
+// modif des fiche street
+    elseif ($p == 'modif' )
+    {
+        if (!empty($_SESSION['auth']))
+        {
+            if (!empty($id))
+            {
+            $vue->getModif($droits,(int)$id);
+            } else {
+            $vue->get404();
+          }
+        } else {
+        $vue->get404();
+        }
+    }
+// deconection
+    elseif ($p == 'deconnec' )
+    {
+
+      $modifs->getDeconnec();
+
+    }
+// la fameuse page 404
+    else {
+
+     $vue = new Vue('404');
+    $vue->get404();
+    }
 
 
 } else {
-
-    $streets = $posts->getPostAllrandom($droits['valid'], $droits['statut'],3);
-
-    $template = 'home';
+// par default
+   $vue = new Vue('accueil');
+    $vue->getAccueil($droits);
 }
-
-if (empty($template) || !file_exists('./templates/' . $template . '.phtml'))
-{
-    $template = '404';
-}
-
-
-if (isset($template) )
-{
-    $titre = ucfirst($template.' streetArt');
-    $descrition=ucfirst($template.' découverte street Art référencé par des internaute passionnee dans leur ville.');
-}
-
-require 'templates/layout.phtml';

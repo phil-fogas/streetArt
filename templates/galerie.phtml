@@ -1,31 +1,27 @@
-
+<!-- page galerie pour une recheche par categorie et non de rue partielle-->
+<article class="article">
 <h1>Galerie des street Art</h1>
-
-<section class="article">
-
-<form action="#" method="get" class="form">
-    <div class="field">
-        <input type="hidden" name="p" id="p" value="galerie">
-        <label for="rue">Recherche par rue: </label>
-        <input type="text" name="rue" id="rue">
-
-    </div>
-    <div class="field">
-        <label for="rue">Recherche par categorie: </label>
-        <select name="categorie" id="categorie">
-            <option value="">selectionner vote categorie</option>
-            <?php foreach ($categories as $categorie) : ?>
-                <option value="<?= $categorie['id'] ?>"><?= ucfirst($categorie['name']) ?></option>
-            <?php endforeach ?>
-        </select>
-    </div>
-    <div class="field">
-        <button type="submit" class="botton">recherche</button>
-    </div>
-</form>
-</section>
-
-<section id="galerie" class="galerie">
-    <?php require('./search.php'); ?>
-
-</section>
+	<form action="#" method="get" class="form">
+		<div class="field">
+			<input type="hidden" name="p" id="p" value="galerie">
+			<label for="rue">Recherche par rue: </label>
+			<input type="text" name="rue" id="rue">
+		</div>
+		<div class="field">
+			<label for="rue">Recherche par categorie: </label>
+			<select name="categorie" id="categorie">
+				<option value="">selectionner vote categorie</option>
+				<?php foreach ($categories as $categorie) : ?>
+				<option value="<?= $categorie['id'] ?>"><?= ucfirst($categorie['name']) ?></option>
+				<?php endforeach ?>
+			</select>
+		</div>
+		<div class="field">
+			<button type="submit" class="botton">recherche</button>
+		</div>
+	</form>
+</article>
+<!-- afichage de la recherhce  en ajax ou sumit -->
+<div id="galerie" class="centre">
+	<?php require_once('./search.php'); ?>
+</div>

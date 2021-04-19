@@ -16,6 +16,7 @@ class Statuts extends Database
     }
     public function getStatutAll(): array
     {
+        //le statut de la fiche
         $sql = ("SELECT id,statut FROM `statut` ;");
 
         $statuts = $this->fetchAll($sql);

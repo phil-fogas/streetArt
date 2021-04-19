@@ -10,31 +10,37 @@ use Database;
 class Users extends Database
 {
 
-
     public function __construct()
     {
     parent::__construct();
-
-
     }
 
-    public function droit( string $droi): array
+    public function droit(string $droit): array
     {
-        if (!$droi){
+        //atribution des droit selon le menbre
+        if (!$droit)
+        {
             $sql = 'SELECT valid,statut,id FROM `droit` WHERE droit.`id` = 1 ;';
-
-        }else{
-            $sql = 'SELECT valid,statut,droit,droit.id  FROM `droit` INNER JOIN `users` ON droit.id = users.droit WHERE users.`id` = ' . $droi . ' ;';
+        } else {
+            $sql = 'SELECT valid,statut,droit,droit.id  FROM `droit` INNER JOIN `users` ON droit.id = users.droit WHERE users.`id` = ' . $droit . ' ;';
         }
 
-        $droit = $this->fetch($sql);
-        $droits = ['droit'=>$droit['id'],'valid' => ($droit['valid']), 'statut' => $droit['statut']];
+        $droi = $this->fetch($sql);
+        // si par hasard si cookie defecteux
+        if (!isset($droi))
+        {
+        $sql = 'SELECT valid,statut,id FROM `droit` WHERE droit.`id` = 1 ;';
+        $droi = $this->fetch($sql);
+        }
+       
+        $droits = ['droit'=>$droi['id'],'valid' => $droi['valid'], 'statut' => $droi['statut']];
 
         return $droits;
     }
 
     public function getMenberAll(): array
     {
+        //recuperation des fiche users
         $sql = ("SELECT users.id,pseudo,droit,created_at,dateVisi,name FROM `users` INNER JOIN `droit` ON droit.id= `users`.droit ;");
 
         $menbers =$this->fetchAll($sql);
@@ -43,7 +49,7 @@ class Users extends Database
 
     public function getUser(array $params): array
     {
-        //var_dump($params);
+        //recuperation de la fiche user
         $sql = ("SELECT id,pseudo,password,email,droit FROM `users` WHERE email LIKE :email OR pseudo like :email ;");
 
         $params = ([
@@ -54,7 +60,7 @@ class Users extends Database
     }
      public function getUserOublier(array $params): array
     {
-        //var_dump($params);
+        // pour le mot de pass oublier
         $sql = ("SELECT id,pseudo,password,email,droit FROM `users` WHERE email LIKE :email OR pseudo like :pseudo ;");
 
         $params = ([
@@ -66,6 +72,7 @@ class Users extends Database
     }
     public function setUserTime(array $params): int
     {
+        // date de la dernier visite
         $sql = ("UPDATE `users` SET `dateVisi` = NOW() WHERE `users`.`id` = :id ;");
         $params = ([
             'id' => $params['id']
@@ -75,6 +82,7 @@ class Users extends Database
     }
     public function delUser(array $params): int
     {
+        // supretion d'un user
         $sql = ("DELETE FROM `users` WHERE `users`.`id` = :id ;");
         $params = ([
             'id'=> $params['id'],
@@ -87,7 +95,7 @@ class Users extends Database
 
     public function addUser( array $params): string
     {
-
+    //crreation d'un compte user
               $sql = ("INSERT INTO `users`
   (`id`, `pseudo`, `email`, `password`, `droit`, `created_at`)
   VALUES (NULL, :pseudo, :email, :password, :droit , NOW() );");
@@ -99,14 +107,14 @@ class Users extends Database
             'droit'=>'2',
         ]
         );
-//debug($sql,$params);
+
         // var_dump($sql,$params);
         return $res = $this->into($sql, $params);
     }
 
     public function upUser( array $params): string
     {
-
+    //mise a jour du mot de pass
               $sql = ("UPDATE `users` SET `password` = :password WHERE `users`.`id` = :id ;");
 
         $params = ([
@@ -119,6 +127,7 @@ class Users extends Database
     }
      public function setUserDroit(array $params): int
     {
+        //modiffication des droit
         $sql = ("UPDATE `users` SET `droit` = :droit WHERE `users`.`id` = :id_user;");
         $params = ([
             'id_user' => $params['id'],

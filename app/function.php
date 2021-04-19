@@ -6,15 +6,15 @@ function litenPost(string $page,int $id, ?string $name): string
 {
     $nam= str_replace(' ', '_', $name);
  if (!$name){
- $href='<a href="?p='.$page.'&id='.$id.'" title="street '.$id.'">street '.$id.' </a> ';
+    $href ='<a href="?p='.$page.'&id='.$id.'" title="street '.$id.'">street '.$id.' </a> ';
  } else {
-     $href='<a href="?p='.$page.'&id='.$nam.'" title="$name" >'.$name.' </a> ';
+     $href ='<a href="?p='.$page.'&id='.$nam.'" title="$name" >'.$name.' </a> ';
  }
 
  return $href;
 }
 
-/* foncton pour force a redimentioné
+/* fonction pour force a redimentioné
 tous en gardant les porpotions des images
 trop grand ppour l'aficchage html */
 
@@ -52,7 +52,6 @@ function apercu(string $text, int $width = 100): string
     //{return $txt[0].' [...]';}
     //else
     //{return $txt[0];}
-
 
     if (strlen($text) >= $width) {
         $text = substr($text, 0, $width);
@@ -183,7 +182,8 @@ $Src=$img_Src['tmp_name'];
 function transfertPhoto(array $photo): string
 {
 
-    if ($photo) {
+    if ($photo)
+    {
         //var_dump($photo);
         $imgDirection = './img/';
         $uploadfile = $imgDirection . basename($photo['name']);
@@ -195,43 +195,43 @@ function transfertPhoto(array $photo): string
             'jpg',
             'jpeg',
             'png',
-
         ];
 
-        if (in_array($extension, $validExtensions)) {
-
+        if (in_array($extension, $validExtensions))
+        {
             $name = uniqid() . '.' . $extension;
             $true=redimImage($photo);
 
-        if ($true){
+             if ($true)
+            {
             move_uploaded_file($photo['tmp_name'], $imgDirection . $name);
            return $name;
-        }
-        } else {
-        return 'erreur extension';
-        }
+            } else {
+            return '';
+            }
+
+          }
     }
-
-   return 'erreur';
-
+    return '';
 }
+
 function transfertImage(array $image): string
 {
-
-    if ($image) {
+    if ($image)
+    {
         //var_dump($image);
         $imgDirection = './img/';
         $uploadfile = $imgDirection . basename($image['name']);
         $type = explode('.', $image['name']);
         $extension = $type[1];
-            $name = uniqid() . '.' . $extension;
+        $name = uniqid() . '.' . $extension;
         copy($image['tmp_name'], $imgDirection.$name);
-unlink($image['tmp_name']);
-           return $name;
+        unlink($image['tmp_name']);
+         return $name;
 
     }
 
-   return 'erreur';
+   return '';
 
 }
 /* message de bienvenue selon l'heure */
@@ -261,7 +261,6 @@ function bienvenu(): string
 }
 
 
-
 /* calcul des distance entre deux point gps en Km*/
  function get_distance_m(float $lat1,float  $lng1,float  $lat2,float  $lng2): float
  {
@@ -289,12 +288,10 @@ $result = file_get_contents($urls);
 
 $json = json_decode($result, true);
 
-
 $latitude=$json['features'][0]['geometry']['coordinates'][1];
 $longitude=$json['features'][0]['geometry']['coordinates'][0];
 
 return [$longitude,$latitude];
-
 
 }
 

@@ -1,45 +1,42 @@
 <?php include_once('compte.phtml') ?>
+<!-- pages gestion message envoyer par email -->
 <table>
-    <thead>
-    <tr>
-        <th>
-            email
-        </th>
-        <th>
-            sujet
-        </th>
-        <th>
-            message
-        </th>
-        <th>
-            date
-        </th>
-        <th>
-
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($messages as $email): ?>
-        <tr>
-            <td>
-                <a href="mailto:<?= ($email['email']) ?>" title="mail"><?= ($email['email']) ?></a>
-            </td>
-             <td>
-                <?= $email['sujet'] ?>
-            </td>
-            <td>
-                <?= $email['message'] ?>
-            </td>
-            <td>
-                <?= dateTimeFr($email['date']) ?>
-            </td>
-            <td>
-                <a class="red" href="./del_message.php?id=<?= $email['id'] ?>" title="suprimer"><i class="icofont-ui-close"></i> Supprimer </a>
-            </td>
-
-        </tr>
-
-    <?php endforeach ?>
-    </tbody>
+	<thead>
+		<tr>
+			<th>
+				email
+			</th>
+			<th>
+				sujet
+			</th>
+			<th>
+				message
+			</th>
+			<th>
+				date
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($messages as $email): ?>
+		<tr>
+			<td>
+				<a href="mailto:<?= ($email['email']) ?>" title="mail"><?= ($email['email']) ?></a>
+			</td>
+			<td>
+				<?= $email['sujet'] ?>
+			</td>
+			<td>
+				<?= $email['message'] ?>
+			</td>
+			<td>
+				<?= dateTimeFr($email['date']) ?>
+			</td>
+			<td>
+				<a class="red" href="?p=delmessage&id=<?= $email['id'] ?>" title="suprimer"><i class="icofont-ui-close"></i> Supprimer </a>
+			</td>
+		</tr>
+		<?php endforeach ?>
+	</tbody>
 </table>

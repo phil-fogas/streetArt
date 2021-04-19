@@ -1,0 +1,63 @@
+<!-- page aceuil -->
+<h1>Passion StreetArt</h1>
+
+<section class="article">
+	<!-- salutation -->
+	<h2>
+		<?= bienvenu(); ?>
+		<?php if (isset($_SESSION['auth'])) : ?>
+		<?= $_SESSION['auth']['pseudo'] ?>
+		<?php endif ?>
+	</h2>
+	<p>
+		Vous allez découvrir ou redécouvrir l'Art urbain de votre ville.
+	</p>
+	<p>
+		Voir des oeuvres encore visible et revoir des anciennes qui ont étais éffacée.
+	</p>
+	<p>
+		Pensez a nous faire vos proposition de street art sur la page
+		<a href='?p=suggestion' title="suggestion">Suggestion</a>
+		.
+	</p>
+	<p>
+		Déja
+		<?= $count['total'] ?>
+		 street Art inscrite dans notre base.
+	</p>
+	<?php if (isset($_SESSION['auth'])) : ?>
+	<p>
+		Pensez a voter sur les street art que vous préférez.
+	</p>
+	<?php endif ?>
+	<p>
+		Trois exemples de street Art de notre
+		<a href='?p=galerie' title="galerie">
+			<i class="icofont-graffiti"></i>
+			 Galerie
+			<i class="icofont-graffiti"></i>
+		</a>
+	</p>
+</section>
+
+<div class="card centre">
+	<!-- exemple de fiche -->
+	<?php foreach ($streets as $street): ?>
+	<article class="articles">
+		<header>
+			<h2><?= litenPost('detail',$street['id'], $street['name'] ) ?></h2>
+		</header>
+		<img rel="prefetch" src="<?= $this->root ?>/img/<?= $street['photo'] ?>"
+		<?php if(!empty($street['name'])) : ?>
+		alt="<?= $street['name'] ?>"
+		<?php else : ?>
+		alt="<?= $street['photo'] ?>"
+		<?php endif ?>
+		class="reduit" >
+		<footer>
+			<a href="?p=detail&id=<?= $street['id'] ?>" title="street <?= $street['id'] ?>">Plus de détails </a>
+		</footer>
+	</article>
+	<?php endforeach ?>
+</div>
+

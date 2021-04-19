@@ -1,65 +1,68 @@
-
 <?php include_once('compte.phtml') ?>
+<!--- liste des commentaires du menbre --->
 <h1>Commentaires que vous avez ecrire</h1>
 <table>
-    <thead>
-    <tr>
-        <th scope="col">
-            street
-        </th>
-        <th scope="col">
-            date creation et pseudo
-        </th>
-        <th scope="col">
-            commentaire
-        </th>
-
-        <th scope="col">
-            suppression
-        </th>
-
-    </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($comment as $comment): ?>
-        <tr>
-            <td >
-              <?= litenPost('detail',$comment['id'], $comment['name'] ) ?>
-            </td>
-            <td>
-                <?= dateFr($comment['date_ad']) ?> Par: <?= $comment['pseudo'] ?>
-            </td>
-            <td>
-                <?= nl2br(htmlspecialchars($comment['text'])) ?>
-            </td>
-            <td>
-                <a class="red" href="./del_comment.php?id=<?= $comment['id'] ?>" title="suprimer"><i class="icofont-ui-close"></i> Suprimer </a>
-            </td>
-
-
-        </tr>
-    <?php endforeach ?>
-
-
-    <?php if (!empty($commentsAll)) : ?>
-        <tr><th colspan="4" scope="row"><h2>Commentaires laisser par les autres</h2></th></tr>
-        <?php foreach ($commentsAll as $comment): ?>
-            <tr>
-                <td >
-                <?= litenPost('detail',$comment['id'], $comment['name'] ) ?>        </td>
-                <td>
-                    <?= dateFr($comment['date_ad']) ?> Par: <?= $comment['pseudo'] ?>
-                </td>
-                <td>
-                    <?= nl2br(htmlspecialchars($comment['text'])) ?>
-                </td>
-                <td>
-                    <a class="red" href="./del_comment.php?id=<?= $comment['id'] ?>" title="suprimer"><i class="icofont-ui-close"></i> Supprimer </a>
-                </td>
-
-
-            </tr>
-        <?php endforeach ?>
-    <?php endif ?>
-    </tbody>
+	<thead>
+		<tr>
+			<th scope="col">
+				street
+			</th>
+			<th scope="col">
+				date creation et pseudo
+			</th>
+			<th scope="col">
+				commentaire
+			</th>
+			<th scope="col">
+				suppression
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+ <!-- list des comment cree par user -->
+		<?php foreach ($comment as $comment): ?>
+		<tr>
+			<td >
+				<?= litenPost('detail',$comment['id'], $comment['name'] ) ?>
+			</td>
+			<td>
+				<?= dateFr($comment['date_ad']) ?>
+				 Par: 
+				<?= $comment['pseudo'] ?>
+			</td>
+			<td>
+				<?= nl2br(htmlspecialchars($comment['text'])) ?>
+			</td>
+			<td>
+				<a class="red" href="?p=delcomment&id=<?= $comment['id'] ?>" title="suprimer"><i class="icofont-ui-close"></i> Suprimer </a>
+			</td>
+		</tr>
+		<?php endforeach ?>
+		<!--- liste des commentaires de tout le monde--->
+		<?php if (!empty($commentsAll)) : ?>
+		<tr>
+			<th colspan="4" scope="row">
+				<h2>Commentaires laisser par les autres</h2>
+			</th>
+		</tr>
+		<?php foreach ($commentsAll as $comment): ?>
+		<tr>
+			<td >
+				<?= litenPost('detail',$comment['id'], $comment['name'] ) ?>
+			</td>
+			<td>
+				<?= dateFr($comment['date_ad']) ?>
+				 Par: 
+				<?= $comment['pseudo'] ?>
+			</td>
+			<td>
+				<?= nl2br(htmlspecialchars($comment['text'])) ?>
+			</td>
+			<td>
+				<a class="red" href="?p=delcomment&id=<?= $comment['id'] ?>" title="suprimer"><i class="icofont-ui-close"></i> Supprimer </a>
+			</td>
+		</tr>
+		<?php endforeach ?>
+		<?php endif ?>
+	</tbody>
 </table>

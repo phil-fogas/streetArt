@@ -7,7 +7,7 @@ use street\Posts;
 require_once('./models/Posts.php');
 $posts = new Posts();
 
-
+//image aleatoire pour fond de jeu en Js
     $images=$posts->getPostAllrandom('5', '2',1 );
 
 

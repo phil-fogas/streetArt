@@ -10,36 +10,38 @@ class Posts extends Database
     {
         parent::__construct();
 
-
     }
-    public function getPost(): array
+
+    public function getPost(int $id): array
     {
+        // 1 fiche par id
         $sql = ("SELECT street.id,street.name,adresse,photo,description,dateCreation,dateFiche,users.pseudo,valid,categorie.name AS categorie,statut.statut
     FROM `street`
     INNER JOIN `users` ON street.id_user = users.id
     INNER JOIN `categorie` ON categorie.id = street.categorie
     INNER JOIN `statut` ON street.statut = statut.id
     WHERE street.id = :id ;");
-        return $street = $this->fetch($sql, ['id' => $_GET['id']]);
+        return $this->fetch($sql, ['id' => $id ]);
 
     }
-    public function getPostName(): array
-    {
+
+    public function getPostName(string $id): array
+    {// 1 fiche par name
         $sql = ("SELECT street.id,street.name,adresse,photo,description,dateCreation,dateFiche,users.pseudo,valid,categorie.name AS categorie,statut.statut
     FROM `street`
     INNER JOIN `users` ON street.id_user = users.id
     INNER JOIN `categorie` ON categorie.id = street.categorie
     INNER JOIN `statut` ON street.statut = statut.id
     WHERE `street`.`name` LIKE :id ;");
-        return $street = $this->fetch($sql, ['id' => $_GET['id']]);
 
+        return $this->fetch($sql, ['id' => $id ] );
     }
 
     public function getPostAll( string $valid, string $statut): array
     {
-         $sql = "SELECT
-    street.id,street.name,adresse,photo,description,dateCreation,dateFiche,users.pseudo,categorie.name AS categorie,statut.statut,latitude,longitude
-     ";
+        //recheche des fiches selon plusieur critere
+         $sql = "SELECT street.id,street.name,adresse,photo,description,dateCreation,dateFiche,users.pseudo,categorie.name AS categorie,statut.statut,latitude,longitude ";
+
    if (!empty($_GET['km'])) {
        $latitude=$_GET['latitude'];
        $longitude=$_GET['longitude'];
@@ -94,15 +96,13 @@ class Posts extends Database
             $sql .= " ORDER BY `street`.`dateFiche` ASC ;";
         }
 
-
-
-
 //var_dump($sql, $params);
-        return $streets = $this->fetchAll($sql, $params);
+        return $this->fetchAll($sql, $params);
     }
 
     public function getPostAllrandom( string $valid, string $statut,int $max=3 ): array
     {
+        // fiche au hasard
          $sql = "SELECT
     street.id,street.name,photo,statut.statut
      FROM `street`
@@ -117,12 +117,12 @@ class Posts extends Database
 
         ]);
 
-        return $streets = $this->fetchAll($sql, $params);
+        return $this->fetchAll($sql, $params);
     }
 
-    public function getPostAllMenber( string $id): array
+    public function getPostAllMenber(string $id): array
     {
-
+    // liste de toute les fiches pour 1 user
         $sql = ("SELECT
     street.id,street.name,adresse,photo,description,dateCreation,dateFiche,users.pseudo,categorie.name AS categorie,statut.statut
     FROM `street`
@@ -134,16 +134,14 @@ class Posts extends Database
 
         $params = ([
             'id' => $id,
-
         ]);
 
-
-
-        return $streets = $this->fetchAll($sql, $params);
+        return $this->fetchAll($sql, $params);
     }
+
     public function getPostAllMenbers(): array
     {
-
+    // liste de toute les fiches de tous les user
         $sql = ("SELECT
     street.id,street.name,adresse,photo,description,dateCreation,dateFiche,users.pseudo,categorie.name AS categorie,statut.statut
     FROM `street`
@@ -154,20 +152,21 @@ class Posts extends Database
     ;");
 
 
-        return $streets = $this->fetchAll($sql);
+        return $this->fetchAll($sql);
     }
 
     public function countPostAll(): array
     {
+        // conteur de fiches, user, fiche valide
         $sql = ("SELECT ( SELECT COUNT(id) FROM street WHERE valid >= 6 ) AS totalRef,
         ( SELECT COUNT(id) FROM street ) AS total,( SELECT COUNT(id) FROM users ) AS totalUsers ;");
 
-        return $count = $this->fetch($sql);
+        return $this->fetch($sql);
     }
 
     public function addPost( array $params): string
     {
-
+        // nouvelle fiche
         $sql = ("INSERT INTO `street`
   (`id`, `name`, `adresse`, `photo`, `description`, `dateCreation`, `dateFiche`, `valid`, `statut`, `id_user`, `categorie`,`latitude`,`longitude`)
   VALUES (NULL, :name, :adresse, :photo, :description, :dateCreation, NOW(), :valid, :statut, :user, :categorie, :latitude, :longitude );");
@@ -189,12 +188,13 @@ class Posts extends Database
         );
 //debug($sql,$params);
         // var_dump($sql,$params);
-        return $res = $this->into($sql, $params);
+        return  $this->into($sql, $params);
     }
 
 
     public function delPost(array $params): int
     {
+        //supretion fiche
         $sql = ("SELECT photo FROM `street` WHERE `id` = :id ;");
         $params = ([
             'id' => $params['id'],
@@ -204,7 +204,7 @@ class Posts extends Database
         $photo = $this->fetch($sql, $params);
 
         if (isset($photo['photo'])) {
-            unlink('../img/' . $photo['photo']);
+            unlink('./img/' . $photo['photo']);
 
         }
 
@@ -230,9 +230,10 @@ class Posts extends Database
 
     public function setPost(array $params): int
     {
+        // modification fiche
         $sql = ("UPDATE `street` SET `name` = :name ,
-  `description` = :description,`adresse` = :adresse,`categorie` = :categorie,
-  `dateCreation` = :dateCreation,`categorie` = :categorie,`statut` = :statut,
+  `description` = :description ,`adresse` = :adresse ,`categorie` = :categorie ,
+  `dateCreation` = :dateCreation ,`categorie` = :categorie ,`statut` = :statut ,
    `valid` = :valid
   WHERE `street`.`id` = :id ;");
         $params = ([
@@ -247,11 +248,12 @@ class Posts extends Database
         ]
         );
 
-        return $ok = $this->update($sql, $params);
+        return $this->update($sql, $params);
     }
 
      public function setPostArchiv(array $params): int
     {
+        //chagement de statut d'une fiche
           $sql = ("UPDATE `street` SET `statut` = :statut WHERE `street`.`id` = :id ;");
          $params = ([
         'statut'=>'1',
