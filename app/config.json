@@ -1,6 +1,6 @@
 {
   "connection": {
-    "dbname": "lapassiolapasion",
+    "dbname": "streetart",
     "host": "localhost",
     "user": "root",
     "password": ""
