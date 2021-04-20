@@ -485,7 +485,7 @@ private $host = ''; // URL to redirect
 
   if (isset($_POST['email']))
   {
-  $envoi = 'graph@la-passion.fr';
+  $envoi = 'votre@mail.fr';
   // netoyage et validation mail selon format
    $mail = filter_var($mail, FILTER_SANITIZE_EMAIL);
 
