@@ -11,7 +11,7 @@ abstract class Layout
   // contruction du layout
     public function __construct(string $template = 'accueil')
      {
-     $this->root ='.';
+     $this->root = '.';
    $this->template = strtolower($template);
 // pour le referencement nature
    $this->titre = ucfirst($this->template.' streetArt');
