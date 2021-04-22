@@ -9,7 +9,6 @@ define('ROOT', str_replace('index.php','',$_SERVER['SCRIPT_FILENAME']));
 $root ='.';
 require_once(ROOT.'/app/Database.php');
 
-//$db = new Database();
 
 require_once(ROOT.'/app/function.php');
 
@@ -24,28 +23,21 @@ use street\Vue;
 use street\Modif;
 
 require_once(ROOT.'/models/Votes.php');
-//$votes = new Votes();
 
 require_once(ROOT.'/models/Messages.php');
-//$messages = new Messages();
 
 require_once(ROOT.'/models/Posts.php');
-//$posts = new Posts();
 
 require_once(ROOT.'/models/Categorie.php');
-//$categories = new Categorie();
 
 require_once(ROOT.'/models/Comments.php');
-//$comments = new Comments();
 
 require_once(ROOT.'/models/Statuts.php');
-//$statuts = new Statuts();
 
 require_once(ROOT.'/models/Users.php');
 $users = new Users();
 
 require_once(ROOT.'/controller/vue.php');
-//$vue = new Vue();
 require_once(ROOT.'/controller/modif.php');
 
 /* selon les droit adminitratif
@@ -61,9 +53,12 @@ require_once(ROOT.'/controller/modif.php');
 
 
 /* routeur */
-if (isset($_GET['p']))
+if (isset($_GET))
 {
+    if (isset($_GET['p']))
+    {
     $p = strtolower(htmlentities($_GET['p'], ENT_QUOTES));
+    }
 
     if (isset($_GET['id']))
     {

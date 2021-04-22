@@ -60,7 +60,7 @@ class Vue extends Layout
 
             if (is_numeric($id))
             {
-            $street = $posts->getPost((int) $id);
+            $street = $posts->getPost(($id);
              } else {
             $street = $posts->getPostName($id);
             }
@@ -69,7 +69,7 @@ class Vue extends Layout
             {
             $comments = new Comments();
             $votes = new Votes();
-            $idc = (int)$street['id'];
+            $idc = $street['id'];
             $comments = $comments->getComments($idc);
             $vote = $votes->vote();
             require_once $this->layout;

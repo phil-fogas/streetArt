@@ -35,7 +35,9 @@ private $host = ''; // URL to redirect
       $url=$_SERVER['HTTP_REFERER'];
       }
 
+      http_response_code(301);
       header("Location: ".$this->host."".$url."");
+      exit();
      }
 
 // deconnection
@@ -482,7 +484,16 @@ private $host = ''; // URL to redirect
   $mail = addslashes($_POST['email']);
   $message = addslashes($_POST['message']);
 
+if (!$_POST['email']&&$_SESSION['auth']['pseudo'])
+     {
+    $_POST['email']=$_SESSION['auth']['pseudo'];
+     
+      }
 
+  if(empty($sujet))
+    {
+    $sujet="message de ".$mail;
+    }
   if (isset($_POST['email']))
   {
   $envoi = 'votre@mail.fr';
@@ -494,7 +505,7 @@ private $host = ''; // URL to redirect
    $passage_ligne = "\r\n";
    $header = '';
    $header .= "MIME-Version: 1.0" . $passage_ligne;
-   $header .= "Subject: '.$sujet.' " . $passage_ligne;
+   $header .= "Subject: $sujet " . $passage_ligne;
    $header .= "Date: " . date('r') . $passage_ligne;
    $header .= "From: $mail " . $passage_ligne;
    $message = (wordwrap($message, 70, $passage_ligne));
@@ -506,31 +517,28 @@ private $host = ''; // URL to redirect
    }
 
 // verrification si post est pas vide et mail est bon format
-   if (!empty($_POST) && filter_var($mail, FILTER_VALIDATE_EMAIL))
+f (!empty($_POST) && filter_var($mail, FILTER_VALIDATE_EMAIL))
     {
-    $erreur = 3;
+
 // envoie mail
     $verif_envoi_mail = @mail($envoi, $sujet, $message, $header);
     // verrifier si y a envoie mail
+
        if ($verif_envoi_mail === FALSE)
        {
-        $erreur = 1;
+        $erreur = 2;
 
         } else {
-        $erreur = 2;
+        $erreur = 1;
 
         }
 
     }
 
- if (!$_POST['email']&&$_SESSION['auth']['pseudo'])
-     {
-    $_POST['email']=$_SESSION['auth']['pseudo'];
-     $erreur = 1;
-      }
 // si pas envoi mail faute de serveur ou autre
 // saugarde en mp dans le site
-   if ($erreur == 1)
+   if (isset($erreur))
+
    {
     $params = ([
         'email' => $_POST['email'],
