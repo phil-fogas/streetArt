@@ -12,7 +12,7 @@ class Posts extends Database
 
     }
 
-    public function getPost(int $id): array
+    public function getPost(string $id): array
     {
         // 1 fiche par id
         $sql = ("SELECT street.id,street.name,adresse,photo,description,dateCreation,dateFiche,users.pseudo,valid,categorie.name AS categorie,statut.statut
@@ -40,7 +40,7 @@ class Posts extends Database
     public function getPostAll( string $valid, string $statut): array
     {
         //recheche des fiches selon plusieur critere
-         $sql = "SELECT street.id,street.name,adresse,photo,description,dateCreation,dateFiche,users.pseudo,categorie.name AS categorie,statut.statut,latitude,longitude ";
+         $sql = "SELECT street.id,street.name,adresse,photo,description,dateCreation,dateFiche,users.pseudo,valid,categorie.name AS categorie,statut.statut,latitude,longitude ";
 
    if (!empty($_GET['km'])) {
        $latitude=$_GET['latitude'];
@@ -60,7 +60,7 @@ class Posts extends Database
     $longitude=$json['features'][0]['geometry']['coordinates'][0];
 
     }
-    $formule="(6366*acos(cos(radians($latitude))*cos(radians(`latitude`))*cos(radians(`longitude`) -radians($longitude))+sin(radians($latitude))*sin(radians(`latitude`))))";
+    $formule="(6366 * acos(cos(radians($latitude)) * cos(radians(`latitude`)) * cos(radians(`longitude`) - radians($longitude)) + sin(radians($latitude)) * sin(radians(`latitude`))))";
        $sql .= " ,".$formule." AS dist ";
 //var_dump($formule);
         }

@@ -34,8 +34,7 @@ private $host = ''; // URL to redirect
       {
       $url=$_SERVER['HTTP_REFERER'];
       }
-
-      http_response_code(301);
+        http_response_code(301);
       header("Location: ".$this->host."".$url."");
       exit();
      }
@@ -233,7 +232,7 @@ private $host = ''; // URL to redirect
     $this->redirection('message');
     }
 //del post
-    public function delPosts(int $id): void
+    public function delPosts($id): void
     {
       $posts = new Posts();
        $params = ([
@@ -248,7 +247,7 @@ private $host = ''; // URL to redirect
    public function addComptes(): void
     {
         $users = new Users();
-        $_POST['email']=nl2br(htmlspecialchars($_POST['email']));
+        $_POST['email'] = nl2br(htmlspecialchars($_POST['email']));
 // netoyage et validation mail selon format
         $testmail = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
 
@@ -361,7 +360,7 @@ private $host = ''; // URL to redirect
 
         $posts->setPost($params);
 
-        $this->redirection('detail',$id);
+        $this->redirection('detail',(int) $id);
     }
 
 // creation de post
@@ -479,51 +478,53 @@ private $host = ''; // URL to redirect
 // envoie message de la page conctact
   public function setContact(): void
   {
+
+   if (!$_POST['email'] && $_SESSION['auth']['pseudo'])
+     {
+    $_POST['email'] = $_SESSION['auth']['pseudo'];
+     
+      }
   $erreur = 3;
   $sujet = addslashes($_POST['sujet']);
   $mail = addslashes($_POST['email']);
   $message = addslashes($_POST['message']);
 
-if (!$_POST['email']&&$_SESSION['auth']['pseudo'])
-     {
-    $_POST['email']=$_SESSION['auth']['pseudo'];
-     
-      }
-
   if(empty($sujet))
-    {
-    $sujet="message de ".$mail;
-    }
+  {
+  $sujet="message de ".$mail;
+  }
+
   if (isset($_POST['email']))
   {
-  $envoi = 'votre@mail.fr';
+  $envoi = "graph@la-passion.fr";
   // netoyage et validation mail selon format
    $mail = filter_var($mail, FILTER_SANITIZE_EMAIL);
 
    //traitement mail
    $mail = trim(preg_replace("/[\r\n]+/", "", $mail));
    $passage_ligne = "\r\n";
-   $header = '';
+   $header = "";
    $header .= "MIME-Version: 1.0" . $passage_ligne;
    $header .= "Subject: $sujet " . $passage_ligne;
    $header .= "Date: " . date('r') . $passage_ligne;
    $header .= "From: $mail " . $passage_ligne;
    $message = (wordwrap($message, 70, $passage_ligne));
-   $message = htmlentities(preg_replace('/[\r\n]+/', '', $message), ENT_QUOTES, 'UTF-8');
+   $message = htmlentities(preg_replace("/[\r\n]+/", "", $message), ENT_QUOTES, 'UTF-8');
 
    $message = $passage_ligne . $message . $passage_ligne;
 
-   $message = str_replace('\n.', '\n..', $message);
+   $message = str_replace("\n.", "\n..", $message);
    }
 
 // verrification si post est pas vide et mail est bon format
-f (!empty($_POST) && filter_var($mail, FILTER_VALIDATE_EMAIL))
+   if (!empty($_POST) && filter_var($mail, FILTER_VALIDATE_EMAIL))
     {
 
 // envoie mail
+
     $verif_envoi_mail = @mail($envoi, $sujet, $message, $header);
     // verrifier si y a envoie mail
-
+    
        if ($verif_envoi_mail === FALSE)
        {
         $erreur = 2;
@@ -538,12 +539,11 @@ f (!empty($_POST) && filter_var($mail, FILTER_VALIDATE_EMAIL))
 // si pas envoi mail faute de serveur ou autre
 // saugarde en mp dans le site
    if (isset($erreur))
-
    {
     $params = ([
-        'email' => $_POST['email'],
+        'email' => $mail,
         'message' => $_POST['message'],
-        'sujet' => $_POST['sujet'],
+        'sujet' => $sujet,
     ]);
 //var_export($params);
     $messages = new Messages();

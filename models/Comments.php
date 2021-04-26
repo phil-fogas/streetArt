@@ -24,7 +24,7 @@ class Comments extends Database
         return $commentsAll = $this->fetchAll($sql);
     }
 
-    public function getComments(int $id): array
+    public function getComments(string $id): array
     {
         // 1 commentaire
         $sql = ("SELECT comment.id,text,date_ad,pseudo FROM `comment`

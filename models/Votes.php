@@ -13,13 +13,13 @@ class Votes extends Database
     }
 
 
-    public function vote(): array
+    public function vote($id): array
     {
         // verification sur le vote du menbre
         $sql = ("SELECT chose FROM `validation` WHERE `id_user` = :id_user AND `id_street` = :id ;");
 
         if (!empty($_SESSION)) {
-            return $vote = $this->fetch($sql, ['id_user' => $_SESSION['auth']['user_id'], 'id' => $_GET['id']]);
+            return $vote = $this->fetch($sql, ['id_user' => $_SESSION['auth']['user_id'], 'id' => $id]);
         }
         return $vote=[];
     }

@@ -1,18 +1,20 @@
 <!-- page de modification des fiche -->
 <h1>Modification street Art</h1>
-<section class='card'>
-	<aside>
-		<img
-		<?= redimage('<?= $this->root ?>/img/'.$street['photo'].'',200); ?>
+<article class='card article'>
+
+	<form action="?p=upposts&id=<?= $street['id'] ?>" method="post" class="form" enctype='multipart/form-data'>
+   <div class="field">
+	
+		<img <?= redimage('<?= $this->root ?>/img/'.$street['photo'].'',300); ?>
 		 rel="prefetch" src="<?= $this->root ?>/img/<?= $street['photo'] ?>"
 		<?php if(!empty($street['name'])) : ?>
 		alt="<?= $street['name'] ?>"
 		<?php else : ?>
 		alt="<?= $street['photo'] ?>"
 		<?php endif ?>
-		class="photo">
-	</aside>
-	<form action="?p=upposts&id=<?= $street['id'] ?>" method="post" class="form" enctype='multipart/form-data'>
+		class="photo" >
+	
+	</div>
 		<div class="field">
 			<label for="name">Nom: </label>
 			<small>
@@ -117,4 +119,4 @@
 			<button type="submit" class="botton"><i class="icofont-ui-check"></i>Modifier / Sauvegarder</button>
 		</div>
 	</form>
-</section>
+</article>

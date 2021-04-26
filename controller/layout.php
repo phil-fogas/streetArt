@@ -8,19 +8,27 @@ abstract class Layout
   protected string $template;
   protected string $layout;
 
+ 
   // contruction du layout
-    public function __construct(string $template = 'accueil')
+    public function __construct(string $template = 'accueil',$url=[])
      {
-      ob_start();
+     ob_start();
+
      $this->root = '.';
-   $this->template = strtolower($template);
+     if ($url[1]){
+     $this->root = '..';
+     }
+     
+     $this->template = strtolower($template);
 // pour le referencement nature
    $this->titre = ucfirst($this->template.' streetArt') ?? 'streetart';
     $this->description = ucfirst($this->template.' découverte street Art référencé par des internaute passionnée dans leur ville.');
-
-    $this->layout = $this->root.DIRECTORY_SEPARATOR.'/templates/layout.phtml';
-    ob_get_clean();
+    $this->content="";
+    $this->layout = './templates/layout.phtml';
+ob_get_clean();
    //require_once $this->layout;
-   }
+   //return $this;
+     }
+
 
 }

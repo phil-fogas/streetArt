@@ -3,13 +3,16 @@
 
 <section class="article">
 	<!-- salutation -->
-	<h2>
-		<?= bienvenu(); ?>
-		<?php if (isset($_SESSION['auth'])) : ?>
-		<?= $_SESSION['auth']['pseudo'] ?>
+	
+    <h2>
+         <?php if (isset($_SESSION['auth'])) : ?>
+        <?= bienvenu(); ?> <?= $_SESSION['auth']['pseudo'] ?>
+        <?php else : ?>
+        <?= bienvenu(); ?>
 		<?php endif ?>
-	</h2>
-	<p>
+    </h2>
+    
+   	<p>
 		Vous allez découvrir ou redécouvrir l'Art urbain de votre ville.
 	</p>
 	<p>
@@ -25,13 +28,9 @@
 		<?= $count['total'] ?>
 		 street Art inscrite dans notre base.
 	</p>
-	<?php if (isset($_SESSION['auth'])) : ?>
+
 	<p>
-		Pensez a voter sur les street art que vous préférez.
-	</p>
-	<?php endif ?>
-	<p>
-		Trois exemples de street Art de notre
+    	Trois exemples de street Art de notre
 		<a href='?p=galerie' title="galerie">
 			<i class="icofont-graffiti"></i>
 			 Galerie

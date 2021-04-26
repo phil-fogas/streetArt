@@ -48,6 +48,9 @@
 				<b><?= $street['pseudo'] ?></b>
 				<?php endif ?>
 			</small>
+        <small>
+			a reçu <?= ($street['valid']) ?> votes
+		</small>
 		</footer>
 		<?php if (isset($_SESSION['auth'])) : ?>
     <!-- verifie deja voter -->

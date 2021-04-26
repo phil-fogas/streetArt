@@ -10,9 +10,10 @@ class Vue extends Layout
 {
 
 
-    public function __construct(string $template = 'accueil')
+    public function __construct(string $template = 'accueil',$url=[])
      {
-         parent::__construct($template);
+     
+         parent::__construct($template,$url);
 
      }
 // page 404
@@ -30,15 +31,16 @@ class Vue extends Layout
 
      $posts = new Posts();
      $count=$posts->countPostAll();
+     //return  $this->content='propos.phtml';
      require_once $this->layout;
  }
 //page galerie
  public function getGalerie(array $droits ): void
    {
 
-      $categories = new Categorie();
-      $categories = $categories->getCategorieAll();
-
+      $categorie = new Categorie();
+      $categories = $categorie->getCategorieAll();
+   
     require_once $this->layout;
     }
 //page acceuil
@@ -60,7 +62,7 @@ class Vue extends Layout
 
             if (is_numeric($id))
             {
-            $street = $posts->getPost(($id);
+            $street = $posts->getPost($id);
              } else {
             $street = $posts->getPostName($id);
             }
@@ -71,7 +73,7 @@ class Vue extends Layout
             $votes = new Votes();
             $idc = $street['id'];
             $comments = $comments->getComments($idc);
-            $vote = $votes->vote();
+            $vote = $votes->vote($idc);
             require_once $this->layout;
             } else {
              $this->get404();
@@ -85,7 +87,7 @@ class Vue extends Layout
         require_once $this->layout;
     }
 //page suggestio
-    public function getSuggestion(int $e = 0): void
+    public function getSuggestion($e = 0): void
     {
         $e =$e;
         $categories = new Categorie();
@@ -188,7 +190,7 @@ class Vue extends Layout
       require_once $this->layout;
     }
 // page mofifier fiche
- public function getModif(array $droits, int $id): void
+ public function getModif(array $droits, string $id): void
     {
      $posts = new Posts();
         $street = $posts->getPost($id);

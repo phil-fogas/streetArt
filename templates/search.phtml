@@ -1,11 +1,13 @@
 <!-- page des resulta des recherche des fiches   -->
 <?php foreach ($streets as $street): ?>
 <article class="cards articles">
-	<h2>Fiche street</h2>
+
+<h2><?= litenPost('detail',$street['id'], $street['name'] ) ?></h2>
+
 	<header>
-		<p><?= litenPost('detail',$street['id'], $street['name'] ) ?>
-		</p>
+         <p>
 		<?php if ($street['dateCreation']) : ?>
+    </p>
 		<p>
 			Street Art crée le
 			<?= dateFr($street['dateCreation']) ?>
@@ -19,7 +21,7 @@
 			<?= lienGoogle($street['adresse']) ?>
 			<?php if (!empty($street['dist'])) : ?>
 			a
-			<!-- affichage de ladistance -->
+			<!-- affichage de la distance -->
 			<a href="https://www.google.com/maps/place/<?= ($street['latitude']) ?>,<?= ($street['longitude']) ?>" title="possiton gps" target="_blank">
 				<?= round($street['dist'], 2) ?>
 				 Km
@@ -48,6 +50,9 @@
 			Par:
 			<b><?= $street['pseudo'] ?></b>
 			<?php endif ?>
+		</small>
+        <small>
+			a reçu <?= ($street['valid']) ?> votes
 		</small>
 		<!-- affichage nombre commentaire -->
 		<?php foreach ($counts as $count): ?>

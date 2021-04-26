@@ -244,7 +244,7 @@ $modifs = new Modif();
         } else {
          $vue->get404();
         }
-    }
+
 // mise en achive
      elseif ($p == 'archive')
     {
