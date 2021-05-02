@@ -95,7 +95,7 @@ class Vue extends Layout
         require_once $this->layout;
     }
 //page contact
-    public function getContact(int $e = 0): void
+    public function getContact($e = 0): void
     {
         $e = $e;
        require_once $this->layout;
@@ -107,7 +107,7 @@ class Vue extends Layout
         require_once $this->layout;
     }
 //page connection
-    public function getConnection(int $e = 0): void
+    public function getConnection($e = 0): void
     {
         $e = $e;
         require_once $this->layout;

@@ -34,7 +34,7 @@ private $host = ''; // URL to redirect
       {
       $url=$_SERVER['HTTP_REFERER'];
       }
-        http_response_code(301);
+        http_response_code(200);
       header("Location: ".$this->host."".$url."");
       exit();
      }
