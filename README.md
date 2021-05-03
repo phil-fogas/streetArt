@@ -13,6 +13,7 @@ ou encore à l’Antiquité à travers les fresques,
 les hommes ne peuvent s’empêcher d’écrire leur histoire sur les murs.
 
 ***-La page suggestion-***
+
 les suggestions des œuvres pourra se faire anonymement ou pas (si on est inscrit),
 puis elles seront soumises aux votes des membres inscrits,
 une fois qu’elle aura reçu 5 avis positifs,
@@ -23,16 +24,19 @@ sois par géolocalisation avec récupération de l’adresse avec "api-adresse.d
 les images sont compressée en base64 en JS pour un tranfert plus leger puis reccuperer, reconnstuit en PHP coter serveur.
 
 ***-La page galerie-***
+
 les recherches des œuvres se font soit par adresse inscrit sur la fiche ou par sa catégorie
 
 Les fiches des streets peuvent être appelées sois par numéro,
 soit par leur non, soit par street_'numéro'
 
 ***-La page plan-***
+
 sois dans un rayon autour d’une position GPS par géolocalisation ou d’une adresse saisie manuellement et récupération de la position GPS de la rue avec une api .
 le calcul des distances se fait dans le SQL.
 
 ***-La gestion compte-***
+
 Les internautes pourront s’inscrit avec un mail valide
 «par vérification du pattern dans le formulaire puis en php email passer dans le filter_var pour assurée que le mail est conforme puis un petit regard s’il y a un serveur mail et lier au domaine»,
 un pseudo et un mot de passe.
@@ -45,6 +49,7 @@ leur pseudo et le nouveau mot de passe.
 bien sur le mot de passe est haché et crypter avec password_hash.
 
 ***-mini jeux-***
+
 Le jeu en JS ,canvas et sur le principe du casse brick mais là il faut effacer les taches,
 la taille et nombres de celle-ci  et aléatoire,
 le street Art du fond et pris aléatoirement dans la base,
@@ -52,6 +57,7 @@ une gestion des partis gagnée et perdu permet d’ajuster le niveau au fur et a
 les données sont  stockées en localStorage.
 
 ***gestion des images-***
+
 Les images son redimensionné, compressé avant téléchargement a un maximum de width ou height  de 1200 Px ,
 avec prévisualisation de l’image.
 Ou si par hasard le JS est pas activée, la photo est redimensionnée en php après upload.
@@ -63,6 +69,7 @@ Et bien sur quand la fiche est détruite la photo aussi.
 Le mode dark est manuel ou automatique selon heure.
 
 ***les fiches***
+
 les votes sont réservés au membre inscrit, comme pour les commentaires,
 une fois vote on ne peut pas revote,
 
@@ -85,6 +92,7 @@ supprimer les commentaires,
 modifier et archiver ou détruire les fiches street,
 
 *** racine ***
+
 index.php -- router
 images.php -- pour generer image aleatoir dans le mini jeux
 search.php -- pour requete des recherhe  
@@ -94,41 +102,51 @@ robots.txt -- pour indexation des robots
 sitmap.xml -- pour reference des pages pour les robots 
 
 ***dossier app**
+
 les fichiers de conection a la base
 config.json -- mot de passe de la base
 Database.php -- gestion des requete
 function.php --- gestion des function en php
 
 *** controlleur ***
+
 layaout.php -- pour genere le layaout
 vue.php -- pour controler les vues
 modif.php -- pour controler seter
 
 **css**
+
 iconfont.min.css -- pour les icons qui vient de iconfont
 normalize.min.css -- heu pour normaliser les navigateur
 style.css -- tous le css du projet
 
 **fonts**
+
 bakerStreet -- pour l'ecriture
 icofont -- pour les icones je crois
 
 **img ***
+
 les images qui sont telecharger et vu sur les fiches
 
 **js**
+
 ping.js -- pour le mini jeux de casse brick
 street.js -- pour tous les reste du site
 
 **models**
+
 tous les commande de sql
 
 **pic**
+
 les images et les icon utiliser pour le designe du site
 
 **templates**
+
 je crois que ces les templates en .phtml
 de chaque pages
 
 **uploads**
+
 dossier temporaire le tepms de la redimention des images
