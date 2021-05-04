@@ -6,14 +6,13 @@ abstract class Database
     protected PDO $pdo;
     protected $db;
 
-  
     public function __construct()
     {
         // Charge le fichier de configuration config.json
         $config = json_decode(file_get_contents(__DIR__ . '/config.json'), true);
         $connection = $config['connection'];
         try {
-            // gestion pour version local ou distant
+
             if ($_SERVER['SERVER_ADDR'] === ":::1" || $_SERVER['SERVER_ADDR'] === "127:0:0:1" || $_SERVER['SERVER_NAME'] === "localhost") {
                 $this->pdo = new PDO(
                     "mysql:host={$connection['host']};dbname={$connection['dbname']};charset=UTF8",
@@ -28,16 +27,12 @@ abstract class Database
                     "mysql:host={$connection['host']};dbname={$connection['dbname']};charset=UTF8",
                     $connection['user'],
                     $connection['password']
-                    
                 );
 
             }
             $this->db = $this->pdo;
         } catch (PDOException $e) {
-            
-                echo '<p>'.$e->getCode().'</p>'; 
-            echo '<p>Echec de la connexion : ' . $e->getMessage().'</p>';
-                                            
+            echo 'Echec de la connexion : ' . $e->getMessage();
             exit;
         }
 

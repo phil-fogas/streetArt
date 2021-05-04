@@ -85,32 +85,12 @@ h1 {
     font-size: 3rem;
     text-align: center;
 }
-h2 {
-    line-height: 2.5rem;
-     font-size: 25px;
-     font-size: 2.5rem;
-     text-align: center;
- }
- strong {
 
-    line-height: 2.0rem;
-  font-size: 20px;
-  font-size: 2.0rem;
-  text-align: center;
-}
-
-b {
-  font-family: 'BakerStreetRough';
-  line-height: 1.7rem;
-  font-size: 17px;
-  font-size: 1.7rem;
-  text-align: center;
-}
 p {
-    
-    margin: 1em;
-
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
+
 img {
     -webkit-filter: grayscale(20%);
     filter: grayscale(20%);
@@ -458,7 +438,9 @@ main {
 }
 
 section {
-
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-flow: column wrap;
@@ -856,16 +838,16 @@ legend {
 
     }
 
-    .centre{
-
-        -ms-flex-flow: row wrap;
-        flex-flow: row wrap;
-
-    }
     section {
 
         -ms-flex-flow: row wrap;
         flex-flow: row wrap;
+    }
+    .centre{
+    
+        -ms-flex-flow: row wrap;
+        flex-flow: row wrap;
+    
     }
     article {
         margin-right: 0;

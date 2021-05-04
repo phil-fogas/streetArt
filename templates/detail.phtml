@@ -31,13 +31,7 @@
 			</p>
 		</header>
 		<main >
-			<img rel="prefetch" src="<?= $this->root ?>/img/<?= $street['photo'] ?>" 
-			<?php if ($street['name']) : ?>
-				atl="<?= nl2br(htmlspecialchars($street['name'])) ?>"
-			<?php else : ?>
-				atl="<?= nl2br(htmlspecialchars('street '.$street['id'])) ?>"
-			<?php endif ?>
-			class="photo">
+			<img rel="prefetch" src="<?= $this->root ?>/img/<?= $street['photo'] ?>" atl="<?= $street['name'] ?>" class="photo">
 			<p>
 				Description:
 			</p>
