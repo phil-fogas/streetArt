@@ -53,29 +53,30 @@ require_once(ROOT.'/controller/modif.php');
 
 
 /* routeur */
-if (isset($_GET))
+if (isset($_GET['p']))
 {
     if (isset($_GET['p']))
     {
-    $p = strtolower(htmlentities($_GET['p'], ENT_QUOTES));
+    $p = strtolower(htmlentities(trim($_GET['p']), ENT_QUOTES));
     }
-
     if (isset($_GET['id']))
     {
-    $id = strtolower(htmlentities($_GET['id'], ENT_QUOTES));
+    $id = strtolower(htmlentities(trim($_GET['id']), ENT_QUOTES));
    // on force int si numeric
      if (is_numeric($id))
       {
-      $id=(int) $id;
+      $id= $id;
       }
     }
+
+}
+
     if (isset($_GET['e']))
     {
-    $e = (int) $_GET['e'];
+    $e = $_GET['e'];
     }else{
-    $e=0;
+    $e= 0 ;
     }
-}
 
 
 if (isset($p))
@@ -100,8 +101,8 @@ $modifs = new Modif();
     {
         if (isset($id))
         {
-        $id = str_replace('street_', '', $id);
-        // on verifie si id est numerique si on recuper id de la fiche
+        $id = str_replace('street_', '',$id);
+        
         $vue->getDetail($droits,$id);
         } else {
         // si fiche n'est pas trouver'
@@ -337,7 +338,7 @@ $modifs = new Modif();
     {
         if(!empty($_SESSION['auth']))
         {
-        $modifs->setComment();
+        $modifs->setComment($droits);
         } else {
          $vue->get404();
         }
@@ -384,7 +385,7 @@ $modifs = new Modif();
         {
             if (!empty($id))
             {
-            $vue->getModif($droits,(int)$id);
+            $vue->getModif($droits,$id);
             } else {
             $vue->get404();
           }

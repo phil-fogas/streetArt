@@ -1,5 +1,5 @@
 # street Art 
-blog en poo
+blog en Poo Nvc PDO
 sites sur le street Art projet de fin de formation,
 
 Site pour référencer les streets Art,
@@ -12,12 +12,8 @@ Que ce soit au temps des hommes des cavernes,
 ou encore à l’Antiquité à travers les fresques,
 les hommes ne peuvent s’empêcher d’écrire leur histoire sur les murs.
 
-<<<<<<< HEAD
 ***-La page suggestion-***
 
-=======
----La page suggestion---
->>>>>>> parent of 43248f6 (rotot)
 les suggestions des œuvres pourra se faire anonymement ou pas (si on est inscrit),
 puis elles seront soumises aux votes des membres inscrits,
 une fois qu’elle aura reçu 5 avis positifs,
@@ -27,18 +23,13 @@ les adresses elles sont récupérées sois manuellement avec suggestion automati
 sois par géolocalisation avec récupération de l’adresse avec "api-adresse.data.gouv.fr reverse».
 les images sont compressée en base64 en JS pour un tranfert plus leger puis reccuperer, reconnstuit en PHP coter serveur.
 
-<<<<<<< HEAD
 ***-La page galerie-***
 
-=======
----La page galerie---
->>>>>>> parent of 43248f6 (rotot)
 les recherches des œuvres se font soit par adresse inscrit sur la fiche ou par sa catégorie
 
 Les fiches des streets peuvent être appelées sois par numéro,
 soit par leur non, soit par street_'numéro'
 
-<<<<<<< HEAD
 ***-La page plan-***
 
 sois dans un rayon autour d’une position GPS par géolocalisation ou d’une adresse saisie manuellement et récupération de la position GPS de la rue avec une api .
@@ -46,13 +37,6 @@ le calcul des distances se fait dans le SQL.
 
 ***-La gestion compte-***
 
-=======
----La page plan---
-sois dans un rayon autour d’une position GPS par géolocalisation ou d’une adresse saisie manuellement et récupération de la position GPS de la rue avec une api .
-le calcul des distances se fait dans le SQL.
-
----La gestion compte---
->>>>>>> parent of 43248f6 (rotot)
 Les internautes pourront s’inscrit avec un mail valide
 «par vérification du pattern dans le formulaire puis en php email passer dans le filter_var pour assurée que le mail est conforme puis un petit regard s’il y a un serveur mail et lier au domaine»,
 un pseudo et un mot de passe.
@@ -64,24 +48,16 @@ leur pseudo et le nouveau mot de passe.
 
 bien sur le mot de passe est haché et crypter avec password_hash.
 
-<<<<<<< HEAD
 ***-mini jeux-***
 
-=======
----mini jeux---
->>>>>>> parent of 43248f6 (rotot)
 Le jeu en JS ,canvas et sur le principe du casse brick mais là il faut effacer les taches,
 la taille et nombres de celle-ci  et aléatoire,
 le street Art du fond et pris aléatoirement dans la base,
 une gestion des partis gagnée et perdu permet d’ajuster le niveau au fur et a mesure,
 les données sont  stockées en localStorage.
 
-<<<<<<< HEAD
 ***gestion des images-***
 
-=======
----gestion des images---
->>>>>>> parent of 43248f6 (rotot)
 Les images son redimensionné, compressé avant téléchargement a un maximum de width ou height  de 1200 Px ,
 avec prévisualisation de l’image.
 Ou si par hasard le JS est pas activée, la photo est redimensionnée en php après upload.
@@ -92,12 +68,8 @@ Et bien sur quand la fiche est détruite la photo aussi.
 
 Le mode dark est manuel ou automatique selon heure.
 
-<<<<<<< HEAD
 ***les fiches***
 
-=======
----les fiches ---
->>>>>>> parent of 43248f6 (rotot)
 les votes sont réservés au membre inscrit, comme pour les commentaires,
 une fois vote on ne peut pas revote,
 
@@ -119,7 +91,6 @@ lire les messages envoyer sur la page contact,
 supprimer les commentaires,
 modifier et archiver ou détruire les fiches street,
 
-<<<<<<< HEAD
 *** racine ***
 
 index.php -- router
@@ -130,9 +101,6 @@ erreur.php -- pour gerer les ereure reseau
 robots.txt -- pour indexation des robots
 sitmap.xml -- pour reference des pages pour les robots 
 
-=======
-index.php router
->>>>>>> parent of 43248f6 (rotot)
 ***dossier app**
 
 les fichiers de conection a la base
@@ -141,16 +109,10 @@ Database.php -- gestion des requete
 function.php --- gestion des function en php
 
 *** controlleur ***
-<<<<<<< HEAD
 
 layaout.php -- pour genere le layaout
 vue.php -- pour controler les vues
 modif.php -- pour controler seter
-=======
-layaout.php -- pour geneere le layaout
-vue.php -- pour controler les vue
-modif.php-- pour controler setup
->>>>>>> parent of 43248f6 (rotot)
 
 **css**
 
@@ -158,17 +120,10 @@ iconfont.min.css -- pour les icons qui vient de iconfont
 normalize.min.css -- heu pour normaliser les navigateur
 style.css -- tous le css du projet
 
-
-
 **fonts**
-<<<<<<< HEAD
 
 bakerStreet -- pour l'ecriture
 icofont -- pour les icones je crois
-=======
-bakerStreet --pour l'ecriture
-icofont --pour les icones je crois
->>>>>>> parent of 43248f6 (rotot)
 
 **img ***
 
@@ -177,7 +132,7 @@ les images qui sont telecharger et vu sur les fiches
 **js**
 
 ping.js -- pour le mini jeux de casse brick
-street.js --pour tous les reste du site
+street.js -- pour tous les reste du site
 
 **models**
 

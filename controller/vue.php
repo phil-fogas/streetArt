@@ -69,6 +69,11 @@ class Vue extends Layout
 
             if (!empty($street))
             {
+                if ($street['name']) {
+                    $this->keywords = nl2br(htmlspecialchars($street['name'])).", ".$this->keywords;
+                } else {
+                    $this->keywords = nl2br(htmlspecialchars('street '.$street['id'])).", ".$this->keywords;
+                }
             $comments = new Comments();
             $votes = new Votes();
             $idc = $street['id'];
@@ -212,7 +217,12 @@ class Vue extends Layout
 
       }
 
-
+//page erreure
+    public function getErreur($ere): void
+    {
+        $ere=$ere;
+    require_once $this->layout;
+    }
 
 }
 

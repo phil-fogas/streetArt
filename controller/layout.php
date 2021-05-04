@@ -20,14 +20,17 @@ abstract class Layout
      }
      
      $this->template = strtolower($template);
+     $this->index='index.php' ?? 'index.php';
 // pour le referencement nature
    $this->titre = ucfirst($this->template.' streetArt') ?? 'streetart';
+   $this->keywords=ucfirst($this->template.', streetArt, rue') ?? 'streetart';
     $this->description = ucfirst($this->template.' découverte street Art référencé par des internaute passionnée dans leur ville.');
     $this->content="";
     $this->layout = './templates/layout.phtml';
 ob_get_clean();
-   //require_once $this->layout;
-   //return $this;
+  
+   // fermeture base
+   $this->pdo = null ;
      }
 
 
