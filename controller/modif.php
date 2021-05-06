@@ -261,7 +261,7 @@ private $host = ''; // URL to redirect
 
             } else {
             $_POST['email']=null;
-            $vue->getGalerie($droits);
+            $this->redirection('galerie');
 
             }
         }

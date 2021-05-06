@@ -7,33 +7,20 @@ $titre = 'street art';
 
 define('ROOT', str_replace('index.php','',$_SERVER['SCRIPT_FILENAME']));
 $root ='.';
+
 require_once(ROOT.'/app/Database.php');
-
-
 require_once(ROOT.'/app/function.php');
 
-use street\Categorie;
-use street\Comments;
 use street\Users;
-use street\Posts;
-use street\Statuts;
-use street\Messages;
-use street\Votes;
 use street\Vue;
 use street\Modif;
 
 require_once(ROOT.'/models/Votes.php');
-
 require_once(ROOT.'/models/Messages.php');
-
 require_once(ROOT.'/models/Posts.php');
-
 require_once(ROOT.'/models/Categorie.php');
-
 require_once(ROOT.'/models/Comments.php');
-
 require_once(ROOT.'/models/Statuts.php');
-
 require_once(ROOT.'/models/Users.php');
 $users = new Users();
 
