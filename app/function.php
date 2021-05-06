@@ -186,7 +186,7 @@ function transfertPhoto(array $photo): string
     {
         //var_dump($photo);
         $imgDirection = './img/';
-        $uploadfile = $imgDirection . basename($photo['name']);
+       // $uploadfile = $imgDirection . basename($photo['name']);
 
         $type = explode('/', $photo['type']);
         $extension = $type[1];
@@ -221,7 +221,7 @@ function transfertImage(array $image): string
     {
         //var_dump($image);
         $imgDirection = './img/';
-        $uploadfile = $imgDirection . basename($image['name']);
+       // $uploadfile = $imgDirection . basename($image['name']);
         $type = explode('.', $image['name']);
         $extension = $type[1];
         $name = uniqid() . '.' . $extension;
