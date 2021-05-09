@@ -116,7 +116,7 @@
 					</small>
 					<p>
 						<?= nl2br(htmlspecialchars($comment['text'])) ?>
-						<?php if (!empty($_SESSION)) : ?>
+						<?php if (empty($_SESSION)) : ?>
                      <!--  les admin et l'user peut suprimer -->
 						<?php if ($_SESSION['auth']['droit'] == 9 || $_SESSION['auth']['pseudo'] == $comment['pseudo']) : ?>
 						|
