@@ -51,7 +51,7 @@
 				<?= dateFr($street['dateFiche']) ?>
 				<?php if (isset($street['pseudo'])) : ?>
 				Par:
-				<b><?= $street['pseudo'] ?></b>
+				<strong><?= $street['pseudo'] ?></strong>
 				<?php endif ?>
 			</small>
         <small>
@@ -112,7 +112,7 @@
 						Commentée le
 						<?= dateFr($comment['date_ad']) ?>
 						 Par:
-						<b><?= $comment['pseudo'] ?></b>
+						<strong><?= $comment['pseudo'] ?></strong>
 					</small>
 					<p>
 						<?= nl2br(htmlspecialchars($comment['text'])) ?>
