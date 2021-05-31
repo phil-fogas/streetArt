@@ -556,38 +556,38 @@ private $host = ''; // URL to redirect
      
  }
 // traitement des votes
-     public function vote(int $id): void
-     {
-       $votes = new Votes();
-       $val=1;
+public function vote($id, $vote): void
+{
+  $votes = new Votes();
+  $val = 1 ;
 
- // si admin ou moderateur vaut 5
-    if ($_SESSION['auth']['droit']==5||$_SESSION['auth']['droit']==9)
-    {
-    $val=5;
-    }
+// si admin ou moderateur vaut 5
+if ($_SESSION['auth']['droit'] == 5 || $_SESSION['auth']['droit'] == 9 )
+{
+$val = 5 ;
+}
 // addition sous soutration des vote
-    if ($_GET['vote']=='oui')
-    {
-    $valid=+$val;
-    }
+if ($vote == 'oui' )
+{
+$valid =+ $val;
+}
 
-    if ($_GET['vote']=='non')
-    {
-    $valid=-$val;
-    }
+if ($vote == 'non' )
+{
+$valid =- $val;
+}
 
 
-    $params = ([
-    'user_id'=>$_SESSION['auth']['user_id'],
-    'vote'=>$_GET['vote'],
-    'valid'=>$valid,
-    'id'=>$_GET['id']
-    ]);
+$params = ([
+'user_id'=>$_SESSION['auth']['user_id'],
+'vote'=>$vote,
+'valid'=>$valid,
+'id'=>$id
+]);
 
-    $votes->addVote($params);
+$votes->addVote($params);
 
-    $this->redirection('detail',$id);
-   }
+$this->redirection('detail',(int)$id);
+}
 
 }
