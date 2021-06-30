@@ -15,7 +15,7 @@ class Posts extends Database
     public function getPost(string $id): array
     {
         // 1 fiche par id
-        $sql = ("SELECT street.id,street.name,adresse,photo,description,dateCreation,dateFiche,users.pseudo,valid,categorie.name AS categorie,statut.statut
+        $sql = ("SELECT street.id,street.name,adresse,photo,description,dateCreation,dateFiche,users.pseudo,valid,categorie.name AS categorie,statut.statut,longitude,latitude
     FROM `street`
     INNER JOIN `users` ON street.id_user = users.id
     INNER JOIN `categorie` ON categorie.id = street.categorie

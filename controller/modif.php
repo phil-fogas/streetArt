@@ -355,6 +355,8 @@ private $host = ''; // URL to redirect
         'categorie'=>$_POST['categorie'],
         'statut'=>$_POST['statut'],
         'valid'=>$_POST['valid'],
+        'latitude'=>$_POST['latitude'],
+        'longitude'=>$_POST['londitude'],
         'id'=>$id
         ]);
 

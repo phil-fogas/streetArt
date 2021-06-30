@@ -60,6 +60,8 @@
 				Adresse ou se trouve le street Art
 			</small>
 			<input type="text" name="adresse" id="adresse" placeholder="exemple: 23 rue du streetArt lyon"value="<?= ($street['adresse']) ?>"required>
+			<input type="hidden" name="latitude" id="latitude" value="<?= ($street['latitude']) ?>">
+			<input type="hidden" name="longitude" id="longitude" value="<?= ($street['longitude']) ?>">
 			<div id="adres" class="card">
 				<label for="suggestion rue">Suggestion de rue: </label>
 				<small>
