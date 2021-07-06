@@ -34,7 +34,7 @@
 				<?= nl2br(htmlspecialchars($comment['text'])) ?>
 			</td>
 			<td>
-				<a class="red" href="?p=delcomment&id=<?= $comment['id'] ?>" title="suprimer"><i class="icofont-ui-close"></i> Suprimer </a>
+				<a class="red" href="<?= $this->index ?>delcomment/<?= $comment['id'] ?>&idp=<?= $comment['id_street'] ?>" title="suprimer"><i class="icofont-ui-close"></i> Suprimer </a>
 			</td>
 		</tr>
 		<?php endforeach ?>
@@ -59,7 +59,7 @@
 				<?= nl2br(htmlspecialchars($comment['text'])) ?>
 			</td>
 			<td>
-				<a class="red" href="?p=delcomment&id=<?= $comment['id'] ?>" title="suprimer"><i class="icofont-ui-close"></i> Supprimer </a>
+				<a class="red" href="<?= $this->index ?>delcomment/<?= $comment['id'] ?>&idp=<?= $comment['id_street'] ?>" title="suprimer"><i class="icofont-ui-close"></i> Supprimer </a>
 			</td>
 		</tr>
 		<?php endforeach ?>

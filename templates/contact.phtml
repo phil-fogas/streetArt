@@ -19,7 +19,7 @@
 
 <!-- formulaire  envoi mail -->
 <article class="article">
-	<form action="?p=adcontact" method="post" class="form">
+	<form action="<?= $this->index ?>adcontact" method="post" class="form">
 		<div class="field">
 			<label for="email">Entrer votre email <i class="icofont-ui-email"></i>: </label>
 			<input type="email" name="email" id="email" placeholder="excemple: toto@streetArt.fr"pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"

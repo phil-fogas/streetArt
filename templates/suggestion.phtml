@@ -19,10 +19,15 @@
 
 <article class="article">
 <h1>Suggérer un nouveaux street Art</h1>
+     <?php if (!isset($_SESSION['auth'])) : ?>
+      <p>
+      votre suggestion sera enregistrer anonymement, si vous voulez voir les autres streetArt et voter <a href="<?= $this->index ?>addcompte" title="Création compte">Crée votre compte</a>
+      </p>
+      <?php endif ?>
 
 	<noscript>
 		<!--si un navigateur na pas Js activée -->
-		<form action="?p=setposts" method="post" class="form" enctype='multipart/form-data'>
+		<form action="<?= $this->index ?>setposts" method="post" class="form" enctype='multipart/form-data'>
 	</noscript>
 			<div class="field">
 			<label for="photo">photo: </label>
@@ -35,11 +40,10 @@
 			<span class="alert2"></span>
 		</div>
 
-		<!-- formulaire pour tout navigateur -->
-		<form action="?p=setposts" method="post" class="form" enctype='multipart/form-data'>
+		<form action="<?= $this->index ?>setposts" method="post" class="form" enctype='multipart/form-data'>
 			<!-- visualisation image compreser -->
 			<div class="field">
-				<img src="./pic/bombe.png" alt="image compress" id="compressImg">
+				<img data-src="./pic/bombe.png" alt="image compress" id="compressImg">
 				<input type="hidden" name="image" id="image">
 			</div>
 
@@ -82,7 +86,7 @@
 				</select>
 				<!-- pour les admins lien vers la gestion categorie -->
 				<?php if (isset($_SESSION['auth']) && $_SESSION['auth']['droit'] == 9) : ?>
-				<a class="blue" href="?p=categorie"> Gestion categorie </a>
+				<a class="blue" href="<?= $this->index ?>categorie"> Gestion categorie </a>
 				<?php endif ?>
 			</div>
 			<div class="field">

@@ -6,7 +6,7 @@ setlocale(LC_TIME, "fr_FR");
 $titre = 'street art';
 
 define('ROOT', str_replace('index.php','',$_SERVER['SCRIPT_FILENAME']));
-$root ='.';
+$root = dirname(__DIR__).DIRECTORY_SEPARATOR;
 
 require_once(ROOT.'/app/Database.php');
 require_once(ROOT.'/app/function.php');
@@ -40,12 +40,23 @@ require_once(ROOT.'/controller/modif.php');
 
 
 /* routeur */
+$url=null;
 if (isset($_GET['p']))
 {
     if (isset($_GET['p']))
     {
+        $url = explode('/', $_GET['p']);
+    
+        $p = $url[0];
+    
+        if (empty($url[0])){
+            $p='accueil';
+        }
     $p = strtolower(htmlentities(trim($_GET['p']), ENT_QUOTES));
+    } else {
+        $p='accueil';
     }
+
     if (isset($_GET['id']))
     {
     $id = strtolower(htmlentities(trim($_GET['id']), ENT_QUOTES));
@@ -55,7 +66,25 @@ if (isset($_GET['p']))
       $id= $id;
       }
     }
+    if (isset($_GET['idp']))
+    {
+    $idp = strtolower(htmlentities(trim($_GET['idp']), ENT_QUOTES));
+  
+      $idp= ($idp);
+     
+    }
+    if (!empty($url[1]))
+    {
+    $id = strtolower(htmlentities(trim($url[1]), ENT_QUOTES));
+   // on force int si numeric
+     if (is_numeric($id))
+      {
+      $id= $id;
+      }
+    } 
 
+}else {
+    $p='accueil';
 }
 
     if (isset($_GET['e']))
@@ -66,337 +95,318 @@ if (isset($_GET['p']))
     }
 
 
-if (isset($p))
-{
-$vue = new Vue($p);
-$modifs = new Modif();
-
-//page acceuiel
- if ($p =='accueil')
+    if (isset($p))
     {
-    $vue->getAccueil($droits);
-    }
-//page galeerie
-   elseif ($p == 'galerie')
-    {
-
-    $vue->getGalerie($droits);
-
-    }
-//fiche detail
-    elseif ($p == 'detail')
-    {
-        if (isset($id))
-        {
-        $id = str_replace('street_', '',$id);
-        
-        $vue->getDetail($droits,$id);
-        } else {
-        // si fiche n'est pas trouver'
-        $vue->get404();
-        }
-    }
-//plan
-    elseif ($p == 'plan')
-    {
-
-         $vue->getPlan();
-    }
-// sugestion
-    elseif ($p == 'suggestion')
-    {
-        $vue->getSuggestion($e);
-    }
-//contact
-    elseif ($p == 'contact')
-    {
-
-         $vue->getContact($e);
-    }
-// envoie mail de contact
-    elseif ($p == 'adcontact')
-    {
-
-         $modifs->setContact($e);
-    }
-// creation de compte
-    elseif ($p == 'addcompte')
-    {
-
-         $vue->getAddcompte();
-    }
-// connection
-    elseif ($p == 'connection')
-    {
-
-         $vue->getConnection($e);
-    }
-// verification la connection
-    elseif ($p == 'setconnection')
-    {
-         $modifs->setConnection();
-    }
-// oublier
-    elseif ($p == 'oublier')
-    {
-         $vue->getOublier();
-    }
-// modifi de mot passe oubmier
-   elseif ($p == 'setoublier')
-    {
-         $modifs->setOublier();
-    }
-//propos
-    elseif ($p == 'propos')
-    {
-        $vue->getPropos();
-    }
-//juex
-    elseif ($p == 'jeux')
-    {
-
-       $vue->getJeux();
-    }
-// liste des messege pour admin
-    elseif ($p == 'message')
-    {
-        if ($droits['droit'] == 9)
-        {
-        $vue->getMessage();
-        }else{
-         $vue->get404();
-        }
-
-    }
-// del message
- elseif ($p == 'delmessage')
-    {
-        if ($droits['droit'] == 9)
-        {
-        $modifs->delMessage($id);
-        }else{
-         $vue->get404();
-        }
-
-    }
-// liste des user menbre pour admin
-    elseif ($p == 'menbre')
-    {
-       if ($droits['droit'] == 9)
-        {
-        $vue->getMenbre();
-
-         } else {
-         $vue->get404();
-        }
-    }
-// compte
-    elseif ($p == 'compte')
-    {
-        if(!empty($_SESSION['auth']))
-        {
-        $vue->getCompte();
-        } else {
-        $vue->get404();
-        }
-    }
-// creation compte
-  elseif ($p == 'adcomptes')
-    {
-        if(isset($_POST))
-        {
-        $modifs->addComptes();
-        } else {
-        $vue->get404();
-        }
-    }
-  // getion categorie pour adimn
-    elseif ($p == 'categorie')
-    {
-        if ($droits['droit'] == 9)
-        {
-
-        $vue->getCategorie();
-
-        } else {
-         $vue->get404();
-        }
-    }
-// modif categorie par admin
-  elseif ($p == 'setcategorie')
-    {
-        if ($droits['droit'] == 9)
-        {
-
-        $modifs->setCategorie();
-        } else {
-         $vue->get404();
-        }
-    }
-// mise en achive
-     elseif ($p == 'archive')
-    {
-       
-        $modifs->setArchive((int) $id);
-      
-    }
-
-// del fiche post
-    elseif ($p == 'delposts')
-    {
-        if (!empty($id))
-        {
-        $modifs->delPosts($id);
-        }else {
-        $vue->get404();
-        }
-    }
-// mdoif vote
-    elseif ($p == 'vote')
-    {
-        
-        $modifs->vote($id);
-       
-    }
-// creation fiche post
-     elseif ($p == 'upposts')
-    {
-        if (!empty($_FILES) && $_FILES['photo']['error']==1)
-        {
-        $_FILES['photo']=null;
-        $vue->getSuggestion(2);
-        }
-
-       if (!empty($_POST))
-        {
-        $modifs->upPosts($id);
-        } else {
-        $vue->get404();
-        }
-    }
-// modif fiche post
-     elseif ($p == 'setposts')
-    {
-
-       if (!empty($_POST))
-        {
-        $modifs->setPosts();
-        } else {
-        $vue->get404();
-        }
-    }
-// del catgorie par admin
-      elseif ($p == 'delcategories')
-    {
-        if ($droits['droit'] == 9)
-        {
-
-        $modifs->delCategories();
-
-        } else {
-         $vue->get404();
-        }
-    }
-// modif droit par admin
-      elseif ($p == 'updroit')
-    {
-        if ($droits['droit'] == 9)
-        {
-
-        $modifs->updroit($id);
-
-        } else {
-         $vue->get404();
-        }
-    }
-// liste des comments pour admin
-    elseif ($p == 'comment')
-    {
-        if(!empty($_SESSION['auth']))
-        {
-        $vue->getComment();
-        } else {
-         $vue->get404();
-        }
-
-    }
-// ajout comment
-  elseif ($p == 'setcomment')
-    {
-        if(!empty($_SESSION['auth']))
-        {
-        $modifs->setComment($droits);
-        } else {
-         $vue->get404();
-        }
-
-    }
-// del comment
-    elseif ($p == 'delcomment')
-    {
-        if(!empty($_SESSION['auth']))
-        {
-        $modifs->delComments($id);
-        } else {
-         $vue->get404();
-        }
-
-    }
-// del user menbre
-      elseif ($p == 'delmenbre')
-    {
-        if(!empty($_SESSION['auth']))
-        {
-        $modifs->delMenbre($id);
-        } else {
-         $vue->get404();
-        }
-
-    }
-// liste des fiches
-    elseif ($p == 'street')
-    {
+    $vue = new Vue($p,$url);
+    $modifs = new Modif();
     
-        if(!empty($_SESSION['auth']) )
-        {
-        $vue->getStreet($droits);
-
-        } else {
-       $vue->get404();
-        }
-    }
-// modif des fiche street
-    elseif ($p == 'modif' )
-    {
-        if (!empty($_SESSION['auth']))
-        {
-            if (!empty($id))
+    switch ($p){
+        //page acceuil
+            case "acceuil":
+            $vue->getAccueil($droits);
+            break;
+        //page galerie
+       case "galerie":
+    
+        $vue->getGalerie($droits);
+    
+        break;
+    //fiche detail
+        case "detail":
+            if (isset($id))
             {
-            $vue->getModif($droits,$id);
+            $id = str_replace('street_', '', $id);
+            // on verifie si id est numerique si on recuper id de la fiche
+    
+            $vue->getDetail($droits,$id);
+            } else {
+            // si fiche n'est pas trouver'
+            $vue->get404();
+            }
+        break;
+    //plan
+        case "plan":
+    
+             $vue->getPlan();
+        break;
+    // sugestion
+        case "suggestion":
+            $vue->getSuggestion($e);
+        break;
+    //contact
+        case "contact":
+    
+             $vue->getContact($e);
+        break;
+    // envoie mail de contact
+        case "adcontact":
+    
+             $modifs->setContact($e);
+        break;
+    // creation de compte
+        case "addcompte":
+    
+             $vue->getAddcompte();
+        break;
+    // connection
+        case "connection":
+    
+             $vue->getConnection($e);
+        break;
+    // verification la connection
+        case "setconnection":
+             $modifs->setConnection();
+        break;
+    // oublier
+        case "oublier":
+             $vue->getOublier();
+        break;
+    // modifi de mot passe oubmier
+       case "setoublier":
+             $modifs->setOublier();
+        break;
+    //propos
+        case "propos":
+            $vue->getPropos();
+        break;
+    //juex
+        case "jeux":
+    
+           $vue->getJeux();
+        break;
+    // liste des messege pour admin
+        case "message":
+            if ($droits['droit'] == 9)
+            {
+            $vue->getMessage();
+            }else{
+             $vue->get404();
+            }
+    
+        break;
+    // del message
+     case "delmessage":
+            if ($droits['droit'] == 9)
+            {
+            $modifs->delMessage($id);
+            }else{
+             $vue->get404();
+            }
+    
+        break;
+    // liste des user menbre pour admin
+        case "menbre":
+           if ($droits['droit'] == 9)
+            {
+            $vue->getMenbre();
+    
+             } else {
+             $vue->get404();
+            }
+        break;
+    // compte
+        case "compte":
+            if(!empty($_SESSION['auth']))
+            {
+            $vue->getCompte();
             } else {
             $vue->get404();
-          }
-        } else {
-        $vue->get404();
+            }
+        break;
+    // creation compte
+      case "adcomptes":
+            if(isset($_POST))
+            {
+            $modifs->addComptes();
+            } else {
+            $vue->get404();
+            }
+        break;
+      // getion categorie pour adimn
+        case "categorie":
+            if ($droits['droit'] == 9)
+            {
+    
+            $vue->getCategorie();
+    
+            } else {
+             $vue->get404();
+            }
+        break;
+    // modif categorie par admin
+      case "setcategorie":
+            if ($droits['droit'] == 9)
+            {
+    
+            $modifs->setCategorie();
+            } else {
+             $vue->get404();
+            }
+        break;
+    // mise en achive
+         case "archive":
+           
+            $modifs->setArchive((int) $id);
+          
+        break;
+    
+    // del fiche post
+        case "delposts":
+            if (!empty($id))
+            {
+            $modifs->delPosts($id);
+            }else {
+            $vue->get404();
+            }
+        break;
+    // mdoif vote
+        case "vote":
+            
+            $modifs->vote($id,$_GET['vote'] );
+           
+        break;
+    // creation fiche post
+         case "upposts":
+            if (!empty($_FILES) && $_FILES['photo']['error'] == 1)
+            {
+            $_FILES['photo']=null;
+            $vue->getSuggestion(2);
+            }
+    
+           if (!empty($_POST))
+            {
+            $modifs->upPosts($id);
+            } else {
+            $vue->get404();
+            }
+        break;
+    // modif fiche post
+         case "setposts":
+    
+           if (!empty($_POST))
+            {
+            $modifs->setPosts();
+            } else {
+            $vue->get404();
+            }
+        break;
+    // del catgorie par admin
+          case "delcategories":
+            if ($droits['droit'] == 9)
+            {
+    
+            $modifs->delCategories();
+    
+            } else {
+             $vue->get404();
+            }
+        break;
+    // modif droit par admin
+          case "updroit":
+            if ($droits['droit'] == 9)
+            {
+    
+            $modifs->updroit($id);
+    
+            } else {
+             $vue->get404();
+            }
+        break;
+    // liste des comments pour admin
+        case "comment":
+            if(!empty($_SESSION['auth']))
+            {
+            $vue->getComment();
+            } else {
+             $vue->get404();
+            }
+    
+        break;
+    // ajout comment
+      case "setcomment":
+            if(!empty($_SESSION['auth']))
+            {
+            $modifs->setComment($droits);
+            } else {
+             $vue->get404();
+            }
+    
+        break;
+    // del comment
+        case "delcomment":
+            if(!empty($_SESSION['auth']))
+            {
+               
+            $modifs->delComments((int) $id,(int) $idp);
+            } else {
+             $vue->get404();
+            }
+    
+        break;
+    // del user menbre
+          case "delmenbre":
+            if(!empty($_SESSION['auth']))
+            {
+            $modifs->delMenbre($id);
+            } else {
+             $vue->get404();
+            }
+    
+        break;
+    // liste des fiches
+        case "street":
+        
+            if(!empty($_SESSION['auth']) )
+            {
+            $vue->getStreet($droits);
+    
+            } else {
+           $vue->get404();
+            }
+        break;
+    // modif des fiche street
+        case "modif":
+            if (!empty($_SESSION['auth']))
+            {
+                if (!empty($id))
+                {
+                $vue->getModif($droits,$id);
+                } else {
+                $vue->get404();
+              }
+            } else {
+            $vue->get404();
+            }
+        break;
+    // deconection
+        case "deconnec":
+          $modifs->getDeconnec();
+        break;
+    
+        case "404":
+         $vue = new Vue('404');
+       $vue->get404();
+          break;
+    
+        default:
+       $vue = new Vue('accueil',$url);
+        $vue->getAccueil($droits);
+        break;
         }
+    
+    
+    // la fameuse page 404
+       
+    
+        // $vue = new Vue('404');
+      // $vue->get404();
+       // break;
+    
+    
+    } else {
+    // par default
+      // $vue = new Vue('accueil',$url);
+      //  $vue->getAccueil($droits);
+      $vue = new Vue('404');
+      $vue->get404();
     }
-// deconection
-    elseif ($p == 'deconnec' )
-    {
-
-      $modifs->getDeconnec();
-
-    }
-// la fameuse page 404
-    else {
-
-     $vue = new Vue('404');
-    $vue->get404();
-    }
-
-
-} else {
-// par default
-   $vue = new Vue('accueil');
-    $vue->getAccueil($droits);
-}

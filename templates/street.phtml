@@ -68,7 +68,7 @@
 			<td>
 				<img
 				<?= redimage('<?= $this->root ?>/img/'.$street['photo'].'',300); ?>
-				 src="./img/<?= $street['photo'] ?>"
+				 data-src="./img/<?= $street['photo'] ?>"
 				 <?php if(!empty($street['name'])) : ?>
 					alt="<?= $street['name'] ?>"
 				<?php else : ?>
@@ -80,10 +80,10 @@
 				<?= nl2br(htmlspecialchars($street['description'])) ?>
 			</td>
 			<td>
-				<a class="red" href="?p=archive&id=<?= $street['id'] ?>"><i class="icofont-ui-close"></i> Supprimer </a>
+				<a class="red" href="<?= $this->index ?>archive/<?= $street['id'] ?>"><i class="icofont-ui-close"></i> Supprimer </a>
 			</td>
 			<td>
-				<a class="green" href="?p=modif&id=<?= $street['id'] ?>"><i class="icofont-ui-check"></i> Modifier </a>
+				<a class="green" href="<?= $this->index ?>modif/<?= $street['id'] ?>"><i class="icofont-ui-check"></i> Modifier </a>
 			</td>
 		</tr>
 		<?php endforeach ?>
@@ -134,14 +134,14 @@
 				<?= nl2br(htmlspecialchars($street['description'])) ?>
 			</td>
 			<td>
-				<a class="red" href="?p=archive&id=<?= $street['id'] ?>"><i class="icofont-ui-close"></i> Supprimer</a>
+				<a class="red" href="<?= $this->index ?>archive/<?= $street['id'] ?>"><i class="icofont-ui-close"></i> Supprimer</a>
 			</td>
 			<td>
-				<a class="green" href="?p=modif&id=<?= $street['id'] ?>"><i class="icofont-ui-check"></i> Modifier</a>
+				<a class="green" href="<?= $this->index ?>modif/<?= $street['id'] ?>"><i class="icofont-ui-check"></i> Modifier</a>
 			</td>
 			<?php if ($_SESSION['auth']['droit'] == 9) : ?>
 			<td>
-				<a class="blue" href="?p=delposts&id=<?= $street['id'] ?>"> détruire</a>
+				<a class="blue" href="<?= $this->index ?>delposts/<?= $street['id'] ?>"> détruire</a>
 			</td>
 			<?php endif ?>
 		</tr>

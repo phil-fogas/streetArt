@@ -1,17 +1,18 @@
 <!-- page aceuil -->
-<h1>Passion StreetArt</h1>
+<h1>la Passion Street Art dans la région de Lyon</h1>
 
 <section class="article">
 	<!-- salutation -->
 	
-    <h2>
+    <p class="center">
+	<strong>
          <?php if (isset($_SESSION['auth'])) : ?>
         <?= bienvenu(); ?> <?= $_SESSION['auth']['pseudo'] ?>
         <?php else : ?>
         <?= bienvenu(); ?>
 		<?php endif ?>
-    </h2>
-    
+    </strong>
+    </p>
    	<p>
 		Vous allez découvrir ou redécouvrir l'Art urbain de votre ville.
 	</p>
@@ -20,18 +21,17 @@
 	</p>
 	<p>
 		Pensez a nous faire vos proposition de street art sur la page
-		<a href='?p=suggestion' title="suggestion">Suggestion</a>
-		.
+		<a href='<?= $this->index ?>suggestion' title="suggestion">Suggestion</a>.
 	</p>
 	<p>
-		Déja
-		<?= $count['total'] ?>
-		 street Art inscrite dans notre base.
+		Déja <?= $count['total'] ?> street Art inscrite dans notre base,
 	</p>
-
+	<p>
+	a cet art éphémère <?= $count['totalEffacee'] ?> sont éffacée de leur mur, mais pas sur le notre.
+	</p>
 	<p>
     	Trois exemples de street Art de notre
-		<a href='?p=galerie' title="galerie">
+		<a href='<?= $this->index ?>galerie' title="galerie">
 			<i class="icofont-graffiti"></i>
 			 Galerie
 			<i class="icofont-graffiti"></i>
@@ -46,7 +46,7 @@
 		<header>
 			<h2><?= litenPost('detail',$street['id'], $street['name'] ) ?></h2>
 		</header>
-		<img rel="prefetch" src="<?= $this->root ?>/img/<?= $street['photo'] ?>"
+		<img rel="prefetch" src="<?= $this->root ?>/img/<?= $street['photo'] ?>" data-src="<?= $this->root ?>/img/<?= $street['photo'] ?>"
 		<?php if(!empty($street['name'])) : ?>
 		alt="<?= $street['name'] ?>"
 		<?php else : ?>
@@ -54,7 +54,7 @@
 		<?php endif ?>
 		class="reduit" >
 		<footer>
-			<a href="?p=detail&id=<?= $street['id'] ?>" title="street <?= $street['id'] ?>">Plus de détails </a>
+			<a href="<?= $this->index ?>detail/<?= $street['id'] ?>" title="street <?= $street['id'] ?>">Plus de détails </a>
 		</footer>
 	</article>
 	<?php endforeach ?>

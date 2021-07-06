@@ -20,7 +20,8 @@ class Vue extends Layout
  public function get404(): void
  {
     $this->titre = '404';
-    $this->description = 'page 404 est la';
+    $this->description = 'page 404 est pas la';
+    
     http_response_code(404);
     $this->template = '404';
     require_once $this->layout;
@@ -57,7 +58,7 @@ class Vue extends Layout
     public function getDetail(array $droits, string $id): void
     {
      $posts = new Posts();
-     
+ 
         // on verifie si id est numerique si on recuper id de la fiche
 
             if (is_numeric($id))
@@ -74,11 +75,13 @@ class Vue extends Layout
                 } else {
                     $this->keywords = nl2br(htmlspecialchars('street '.$street['id'])).", ".$this->keywords;
                 }
+                    
             $comments = new Comments();
             $votes = new Votes();
+            
             $idc = $street['id'];
             $comments = $comments->getComments($idc);
-            $vote = $votes->vote($idc);
+            $votes = $votes->vote($idc);
             require_once $this->layout;
             } else {
              $this->get404();
@@ -191,7 +194,7 @@ class Vue extends Layout
             $streetAll = $posts->getPostAllMenbers();
 
             }
-             
+           
       require_once $this->layout;
     }
 // page mofifier fiche
@@ -209,6 +212,8 @@ class Vue extends Layout
                         $categories = new Categorie();
                         $categories = $categories->getCategorieAll();
                         $statuts = $statuts->getStatutAll();
+                        $users = new Users();
+                        $users = $users->getMenberAll();
                         require_once $this->layout;
                      }
                  } else {
@@ -216,13 +221,13 @@ class Vue extends Layout
                 }
 
       }
-
 //page erreure
-    public function getErreur($ere): void
-    {
-        $ere=$ere;
-    require_once $this->layout;
-    }
+public function getErreur($ere): void
+{
+    $ere=$ere;
+require_once $this->layout;
+}
+
 
 }
 

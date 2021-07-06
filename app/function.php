@@ -47,11 +47,6 @@ if($src_w >= $dst_h){
 /* crée un apercu d'un text trop long */
 function apercu(string $text, int $width = 100): string
 {
-// $txt = explode("\n",wordwrap($text,$width,"\n"));
-// if (isset($txt[1]))
-    //{return $txt[0].' [...]';}
-    //else
-    //{return $txt[0];}
 
     if (strlen($text) >= $width) {
         $text = substr($text, 0, $width);

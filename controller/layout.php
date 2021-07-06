@@ -15,21 +15,27 @@ abstract class Layout
      ob_start();
 
      $this->root = '.';
-     if ($url[1]){
+     $this->root2 = '..';
+     
+     if (isset($url[1])){
      $this->root = '..';
      }
-     
+    
      $this->template = strtolower($template);
-     $this->index='index.php' ?? 'index.php';
 // pour le referencement nature
-   $this->titre = ucfirst($this->template.' streetArt') ?? 'streetart';
-   $this->keywords=ucfirst($this->template.', streetArt, rue') ?? 'streetart';
+  $this->index ='./' ?? 'index.php';
+  if (isset($url[1])){
+    $this->index ='../' ?? './index.php';
+    }
+   $this->titre = ucfirst($this->template.' streetArt lyon') ?? 'streetart';
+   $this->keywords = ucfirst($this->template.', streetArt, street Art, Lyon, rue de Lyon, passion.fr') ?? 'street Art, streetart, lyon, passion';
     $this->description = ucfirst($this->template.' découverte street Art référencé par des internaute passionnée dans leur ville.');
     $this->content="";
     $this->layout = './templates/layout.phtml';
+
 ob_get_clean();
-  
-   // fermeture base
+   //require_once $this->layout;
+   //return $this;
    $this->pdo = null ;
      }
 

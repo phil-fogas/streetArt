@@ -36,11 +36,11 @@
 			<th>
 				<?= ($menbre['name']) ?>
 				<?php if ($menbre['name']!="admin"): ?>
-				<a href="?p=updroit&id=<?= $menbre['id'] ?>&d=<?= $menbre['name'] ?>">baculer</a>
+				<a href="<?= $this->index ?>updroit/<?= $menbre['id'] ?>&d=<?= $menbre['droit'] ?>">baculer</a>
 				<?php endif ?>
 			</th>
 			<th>
-				<a class="red" href="?p=delmenbre&id=<?= $menbre['id'] ?>"> Supprimer </a>
+				<a class="red" href="<?= $this->index ?>delmenbre/<?= $menbre['id'] ?>"> Supprimer </a>
 			</th>
 		</tr>
 		<?php endforeach ?>

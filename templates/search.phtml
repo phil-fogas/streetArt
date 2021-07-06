@@ -1,7 +1,11 @@
 <!-- page des resulta des recherche des fiches   -->
 <?php foreach ($streets as $street): ?>
-<article class="cards articles">
 
+<?php if (trim($street['statut']) == 'effacée') : ?>
+		<article class="cards articles efface">
+		<?php else : ?>
+		<article class="cards articles">
+	<?php endif ?>
 <h2><?= litenPost('detail',$street['id'], $street['name'] ) ?></h2>
 
 	<header>
@@ -36,11 +40,11 @@
 	</header>
 	<!-- affichage lien et un apercu descrition -->
 	<div class="main">
-		<img rel="prefetch" srcset="<?= $root ?>/img/<?= $street['photo'] ?>" src="<?= $root ?>/img/<?= $street['photo'] ?>" alt="<?= $street['id'].$street['name']  ?>" class="reduit" >
+		<img rel="prefetch" srcset="<?= $roo ?>/img/<?= $street['photo'] ?>" data-src="<?= $roo ?>/img/<?= $street['photo'] ?>" alt="<?= $street['id'].$street['name']  ?>" class="reduit" >
 		<p>
 			<?= nl2br(htmlspecialchars(apercu($street['description']))) ?>
 		</p>
-		<a href="?p=detail&id=<?= $street['id'] ?>" title="street <?= $street['id'] ?>">Plus de détails</a>
+		<a href="<?= $this->index ?>detail/<?= $street['id'] ?>" title="street <?= $street['id'] ?>">Plus de détails</a>
 	</div>
 	<footer>
 		<small>

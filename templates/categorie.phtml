@@ -2,7 +2,7 @@
 <!--- ajout de categorie --->
 <h1>Gestion des categories</h1>
 <section class='card'>
-	<form action="?p=setCategorie" method="post" class="form">
+	<form action="<?= $this->index ?>setCategorie" method="post" class="form">
 		<div class="field">
 			<label for="categorieAd">Nom de la categorie: </label>
 			<small>
@@ -15,10 +15,10 @@
 		</div>
 	</form>
 	<!--- supretion de categorie --->
-	<form action="?p=delcategories" method="post" class="form">
+	<form action="<?= $this->index ?>delcategories" method="post" class="form">
 		<div class="field">
-			<label for="categorieDel">Categorie a supprimer: </label>
-			<select name="categorieDel" id="categorieDel">
+			<label for="id">Categorie a supprimer: </label>
+			<select name="id" id="id">
 				<option value="">--selectionner vote categorie--</option>
 				<?php foreach ($categories as $categorie) : ?>
 				<option value="<?= $categorie['id'] ?>"><?= ucfirst($categorie['name']) ?></option>

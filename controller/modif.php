@@ -17,14 +17,20 @@ private $host = ''; // URL to redirect
 
      }
 // function de redirection #string page "int $id #e pour les eureures
-     public function redirection(string $page, int $id = 0, int $e = 0 )
+     public function redirection(string $page, int $id = 0,int $host = 0, int $e = 0 )
      {
 
-     $url="index.php?p=".$page."";
+     $url=$this->index."".$page."";
+    
      
-      if (!empty($id))
+     if (!empty($id))
      {
-     $url.="&id=".$id;
+     $url.="/".$id;
+     
+     }
+     if (!empty($host))
+     {
+         $this->host='.';
      }
       if (!empty($e))
      {
@@ -34,8 +40,9 @@ private $host = ''; // URL to redirect
       {
       $url=$_SERVER['HTTP_REFERER'];
       }
+      var_dump("Location: ".$this->host."".$url."");
         http_response_code(200);
-      header("Location: ".$this->host."".$url."");
+    header("Location: ".$this->host."".$url."");
       exit();
      }
 
@@ -90,12 +97,12 @@ private $host = ''; // URL to redirect
              
              $this->redirection('compte');
             } else {
-            $this->redirection('connection',0,2);
+            $this->redirection('connection',0,0,2);
              
             }
 
         } else {
-        $this->redirection('connection',0,2);
+        $this->redirection('connection',0,0,2);
         
         }
 
@@ -127,13 +134,13 @@ private $host = ''; // URL to redirect
     {
        
 
-        if ($_GET['d']=='menbre')
+        if ($_GET['d'] == 2)
         {
-        $droit=5;
+        $droit = 5;
         }
-        if ($_GET['d']=='modérateur')
+        if ($_GET['d'] == 5)
         {
-        $droit=2;
+        $droit = 2;
         }
 
     $params = ([
@@ -145,7 +152,7 @@ private $host = ''; // URL to redirect
     $users = new Users();
     $users->setUserDroit($params);
 
-    $this->redirection('menbre');
+    $this->redirection('menbre',0,1);
 
 
   }
@@ -155,15 +162,15 @@ private $host = ''; // URL to redirect
      $categories = new Categorie();
 
          $params = ([
-        'id'=>$_POST['categorieDel'],
+        'id'=>$_POST['id'],
         ] );
 
-        $categories->delCategorie($params);
+        $number=$categories->delCategorie($params);
        
-        $this->redirection('categorie');
+        $this->redirection('categorie',$number,0);
     }
 // ajjoute commentaire
-    public function setComment(array $droits)
+    public function setComment($id)
     {
         $comments = new Comments();
     // traitement $_POST
@@ -176,22 +183,22 @@ private $host = ''; // URL to redirect
         ]);
         $res = $comments->addComments($params);
         
-        $id = $_POST['street'];
+        $id =(int) $_POST['street'];
         
-         $this->redirection('detail',$id);
+         $this->redirection('detail', $id,0);
         }
     }
 // del comment
-    public function delComments(int $id): void
+    public function delComments(int $id,int $idp): void
     {
         $comments = new Comments();
     // traitement $_POST
         $params = ([
-        'id' => $_GET['id'],
+        'id' => $id,
              ]);
-
+             $idp=(int) $idp;
     $number = $comments->delComment($params);
-    $this->redirection('comment');
+    $this->redirection('detail',$idp,$number);
     }
 // archive fiche
  public function setArchive(int $id): void
@@ -203,7 +210,7 @@ private $host = ''; // URL to redirect
         ]);
 
         $posts->setPostArchiv($params);
-        $this->redirection('street',$id);
+        $this->redirection('street',$id,1);
    
     }
 //del user menber
@@ -216,20 +223,21 @@ private $host = ''; // URL to redirect
 
     $users->delUser($params);
   
-    $this->redirection('menbre');
+    $this->redirection('menbre',0,1);
     }
 //del message
- public function delMessage(): void
+ public function delMessage(int $id): void
     {
     $messages = new Messages();
 
 // supretion message
     $params = ([
-        'id' => $_GET['id'],
+        'id' => $id,
     ]);
 
     $number = $messages->delMessage($params);
-    $this->redirection('message');
+    //var_dump($params);
+   $this->redirection('message',0,$number);
     }
 //del post
     public function delPosts($id): void
@@ -241,7 +249,7 @@ private $host = ''; // URL to redirect
 
     $number = $posts->delPost($params);
 
-    $this->redirection('street');
+    $this->redirection('street',0,$number);
     }
 // creation de compte
    public function addComptes(): void
@@ -355,14 +363,15 @@ private $host = ''; // URL to redirect
         'categorie'=>$_POST['categorie'],
         'statut'=>$_POST['statut'],
         'valid'=>$_POST['valid'],
+        'user'=>$_POST['user'],
+        'longitude'=>$_POST['longitude'],
         'latitude'=>$_POST['latitude'],
-        'longitude'=>$_POST['londitude'],
         'id'=>$id
         ]);
 
         $posts->setPost($params);
 
-        $this->redirection('detail',(int) $id);
+        $this->redirection('detail',(int) $id,1);
     }
 
 // creation de post
@@ -406,7 +415,7 @@ private $host = ''; // URL to redirect
         file_put_contents('./uploads/'.$photo, $data);
         // tranfert de l'image
         $imag=array('tmp_name'=>'./uploads/'.$photo,'name'=>$photo);
-// transfere image
+
            if ($imag)
            {
            $name = transfertImage($imag);
@@ -469,11 +478,11 @@ private $host = ''; // URL to redirect
         //var_export($params);
         $posts = new Posts();
         $id = $posts->addPost($params);
-        $this->redirection('suggestion',0,1);
+        $this->redirection('suggestion',0,0,1);
         } else {
         // si probleme
        
-        $this->redirection('suggestion',0,3);
+        $this->redirection('suggestion',0,0,3);
          }
         
  }
@@ -486,7 +495,7 @@ private $host = ''; // URL to redirect
     $_POST['email'] = $_SESSION['auth']['pseudo'];
      
       }
-  $erreur = 3;
+  $erreur = 2;
   $sujet = addslashes($_POST['sujet']);
   $mail = addslashes($_POST['email']);
   $message = addslashes($_POST['message']);
@@ -536,7 +545,10 @@ private $host = ''; // URL to redirect
 
         }
 
-    }
+    }else {
+        $erreur = 2;
+
+        }
 
 // si pas envoi mail faute de serveur ou autre
 // saugarde en mp dans le site
@@ -551,45 +563,49 @@ private $host = ''; // URL to redirect
     $messages = new Messages();
     $messages->addMessage($params);
 
-    }
+    }else {
+        $erreur = 3;
+
+        }
+   
     unset($_POST);
 
-     $this->redirection('contact',0,$erreur);
+    $this->redirection('contact',0,0,$erreur);
      
  }
 // traitement des votes
-public function vote($id, $vote): void
-{
-  $votes = new Votes();
-  $val = 1 ;
+     public function vote($id, $vote): void
+     {
+       $votes = new Votes();
+       $val = 1 ;
 
-// si admin ou moderateur vaut 5
-if ($_SESSION['auth']['droit'] == 5 || $_SESSION['auth']['droit'] == 9 )
-{
-$val = 5 ;
-}
+ // si admin ou moderateur vaut 5
+    if ($_SESSION['auth']['droit'] == 5 || $_SESSION['auth']['droit'] == 9 )
+    {
+    $val = 5 ;
+    }
 // addition sous soutration des vote
-if ($vote == 'oui' )
-{
-$valid =+ $val;
-}
+    if ($vote == 'oui' )
+    {
+    $valid =+ $val;
+    }
 
-if ($vote == 'non' )
-{
-$valid =- $val;
-}
+    if ($vote == 'non' )
+    {
+    $valid =- $val;
+    }
 
 
-$params = ([
-'user_id'=>$_SESSION['auth']['user_id'],
-'vote'=>$vote,
-'valid'=>$valid,
-'id'=>$id
-]);
+    $params = ([
+    'user_id'=>$_SESSION['auth']['user_id'],
+    'vote'=>$vote,
+    'valid'=>$valid,
+    'id'=>$id
+    ]);
 
-$votes->addVote($params);
+    $votes->addVote($params);
 
-$this->redirection('detail',(int)$id);
-}
+    $this->redirection('detail',(int)$id,0);
+   }
 
 }

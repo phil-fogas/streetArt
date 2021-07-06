@@ -282,13 +282,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.getElementById("photo").onchange = function () {
             previewFile(event);
-            /* message alert sur taille image */
-            // if (this.files[0].size > (2 * 1048576)) {
-            //     document.querySelector('.alert2').classList.add("danger");
-            //     let taille = (this.files[0].size / 1048576).toFixed(2);
-            //     document.querySelector('.alert2').innerHTML = "merci de transmetre un fichier de mois de 2 Mo, votre image fait " + taille + " Mo";
-            //     this.value = "";
-            // };
+      
             /* message sur le type image */
             if (this.files[0]) {
                 if (this.files[0].type != 'image/jpeg' && this.files[0].type != 'image/jpg' && this.files[0].type != 'image/png') {

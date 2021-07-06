@@ -84,14 +84,14 @@
 
     <header class="header">
         <nav class="nav">
-            <a href='<?= $this->index ?>?p=accueil' title="accueil"><i class="icofont-home"></i> Accueil</a>
-            <a href='<?= $this->index ?>?p=galerie' title="galerie"><i class="icofont-graffiti"></i> Galerie</a>
+            <a href='<?= $this->index ?>accueil' title="accueil"><i class="icofont-home"></i> Accueil</a>
+            <a href='<?= $this->index ?>galerie' title="galerie"><i class="icofont-graffiti"></i> Galerie</a>
             <?php if (!empty($_SESSION)) : ?>
-                <a href='<?= $this->index ?>?p=compte' title="compte"><i class="icofont-user"></i> Compte</a>
+                <a href='<?= $this->index ?>compte' title="compte"><i class="icofont-user"></i> Compte</a>
             <?php endif ?>
-            <a href='<?= $this->index ?>?p=plan' title="plan"><i class="icofont-search-map"></i> Plan</a>
-            <a href='<?= $this->index ?>?p=suggestion' title="suggestion">Suggestion</a>
-            <a href='<?= $this->index ?>?p=jeux' title="game"><i class="icofont-ui-game"></i> Jeux</a>
+            <a href='<?= $this->index ?>plan' title="plan"><i class="icofont-search-map"></i> Plan</a>
+            <a href='<?= $this->index ?>suggestion' title="suggestion">Suggestion</a>
+            <a href='<?= $this->index ?>jeux' title="game"><i class="icofont-ui-game"></i> Jeux</a>
         </nav>
     </header>
 
@@ -107,14 +107,15 @@
             <legend>Divers</legend>
             <div class="contact">
 
-                <nav>
-                    <a href="<?= $this->index ?>?p=contact" title="contact"><i class="icofont-ui-email"></i> Contact</a>
+       
+            <nav>
+                    <a href="<?= $this->index ?>contact" title="contact"><i class="icofont-ui-email"></i> Contact</a>
                     <?php if (empty($_SESSION['auth'])) : ?>
-                    <a href="<?= $this->index ?>?p=connection" title="login"><i class="icofont-ui-lock"></i> connection</a>
+                    <a href="<?= $this->index ?>connection" title="login"><i class="icofont-ui-lock"></i> connection</a>
                      <?php else : ?>
-                    <a  href='<?= $this->index ?>?p=deconnec' title="deconnection">Deconnection <i class="icofont-ui-close"></i> </a>
+                    <a  href='<?= $this->index ?>deconnec' title="deconnection">Deconnection <i class="icofont-ui-close"></i> </a>
                     <?php endif ?>
-                    <a href="<?= $this->index ?>?p=propos" title="a propos">A propos</a>
+                    <a href="<?= $this->index ?>propos" title="a propos">A propos</a>
                 </nav>
 
             </div>
@@ -125,7 +126,7 @@
         </div>
 
         <div class="entree">
-            <nav><a href="<?= $this->index ?>?p=galerie" title="galerie">Entree
+            <nav><a href="<?= $this->index ?>galerie" title="galerie">Entree
                     <p>dans la</p>
                     <p>galerie</p>
                 </a>

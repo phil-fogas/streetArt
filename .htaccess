@@ -2,6 +2,38 @@ AddDefaultCharset utf-8
 SetEnv TZ Europe/Paris
 AddLanguage fr-FR .html .htm .css .js .php
 
+DirectoryIndex index.php
+
+<IfModule mod_negotiation.c>
+    Options -MultiViews
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_URI}::$0 ^(/.+)/(.*)::\2$
+    RewriteRule .* - [E=BASE:%1]
+
+    RewriteCond %{HTTP:Authorization} .+
+    RewriteRule ^ - [E=HTTP_AUTHORIZATION:%0]
+   # REDIRECT_STATUS
+
+    RewriteCond %{ENV:REDIRECT_STATUS} =""
+    RewriteRule ^index\.php(?:/(.*)|$) %{ENV:BASE}/$1 [R=301,L]
+
+   	RewriteCond %{REQUEST_FILENAME} !-f 
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?p=$1 [QSA,L]
+
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    <IfModule mod_alias.c>
+          RedirectMatch 307 ^/$ /index.php/
+       
+    </IfModule>
+</IfModule>
+
 <Files .htaccess>
 order allow,deny
 Allow from all

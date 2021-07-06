@@ -35,7 +35,7 @@
 				<?= dateTimeFr($email['date']) ?>
 			</td>
 			<td>
-				<a class="red" href="?p=delmessage&id=<?= $email['id'] ?>" title="suprimer"><i class="icofont-ui-close"></i> Supprimer </a>
+				<a class="red" href="<?= $this->index ?>delmessage/<?= $email['id'] ?>" title="suprimer"><i class="icofont-ui-close"></i> Supprimer </a>
 			</td>
 		</tr>
 		<?php endforeach ?>

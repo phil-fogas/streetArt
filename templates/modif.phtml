@@ -1,8 +1,13 @@
 <!-- page de modification des fiche -->
 <h1>Modification street Art</h1>
-<article class='card article'>
 
-	<form action="?p=upposts&id=<?= $street['id'] ?>" method="post" class="form" enctype='multipart/form-data'>
+<?php if (trim($street['statut']) == 'effacée') : ?>
+		<article class="card article efface">
+		<?php else : ?>
+		<article class="card article">
+	<?php endif ?>
+
+	<form action="<?= $this->index ?>upposts/<?= $street['id'] ?>" method="post" class="form" enctype='multipart/form-data'>
    <div class="field">
 	
 		<img <?= redimage('<?= $this->root ?>/img/'.$street['photo'].'',300); ?>
@@ -13,7 +18,7 @@
 		alt="<?= $street['photo'] ?>"
 		<?php endif ?>
 		class="photo" >
-	
+		<?= lienGoogle($street['adresse']) ?>
 	</div>
 		<div class="field">
 			<label for="name">Nom: </label>
@@ -77,6 +82,18 @@
 			si depasse 5 elle sera visible :
 			<input type="number" name="valid" id="valid"value="<?= ($street['valid']) ?>">
 		</div>
+		<select name="user" id="user">
+				<?php foreach ($users as $user) : ?>
+				<option value="<?= $user['id'] ?>"
+					<?php if ($street['pseudo'] == $user['pseudo']) : ?>
+					selected
+					<?php endif ?>
+					>
+					<?= ucfirst($user['pseudo']) ?>
+					
+				</option>
+				<?php endforeach ?>
+			</select>
 		<!-- les admins peuvent modifier le statut -->
 		<div class="field">
 			<label for="statut">statut: </label>

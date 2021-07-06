@@ -14,7 +14,8 @@
 </div>
 <!-- page connection -->
 <?php endif ?>
-<form action="?p=setconnection" method="post" class="form">
+<article class="article">
+<form action="<?= $this->index ?>setconnection" method="post" class="form">
 	<div class="field">
 		<label for="pseudo">Entrer votre pseudo ou email: </label>
 		<input type="text" name="pseudo" id="pseudo" required>
@@ -30,8 +31,9 @@
 	</div>
 	<?php if (empty($_SESSION['auth'])) : ?>
 	<div class="">
-		<a href="?p=oublier" title="mot de pass oublier">Mot de pass oublier</a>
-		<a href="?p=addCompte" title="Création compte">Création compte</a>
+		<a href="<?= $this->index ?>oublier" title="mot de pass oublier">Mot de pass oublier</a>
+		<a href="<?= $this->index ?>addCompte" title="Création compte">Création compte</a>
 	</div>
 	<?php endif ?>
 </form>
+</article>
