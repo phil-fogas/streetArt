@@ -160,7 +160,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `pseudo`, `email`, `password`, `droit`, `created_at`, `dateVisi`) VALUES
-(1, 'anonyme', '', '4546556', 0, '2021-01-01 00:04:51', NULL);
+(1, 'anonyme', '', '4546556', 1, '2021-01-01 00:04:51', NULL);
 
 -- --------------------------------------------------------
 
