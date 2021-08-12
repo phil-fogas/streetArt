@@ -4,7 +4,7 @@ declare(strict_types=1);
 abstract class Layout
 {
  protected string $titre;
-  protected string $destruction;
+  protected string $description;
   protected string $template;
   protected string $layout;
 
